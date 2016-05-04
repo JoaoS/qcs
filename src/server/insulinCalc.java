@@ -75,6 +75,7 @@ public class insulinCalc implements InsulinDoseCalculator{
 
     @WebMethod @Override
     public int backgroundInsulinDose(int bodyWeight) {
+
         int output=0;
         try {
             output = (int) (Math.round((0.55 * bodyWeight) / 0.5));
