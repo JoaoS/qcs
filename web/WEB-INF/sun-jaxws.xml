@@ -4,6 +4,6 @@
 
     <endpoint
             name='insulinCalc'
-            implementation='server.insulinCalc'
+            implementation=''
             url-pattern='/services/HelloWorld'/>
 </endpoints>

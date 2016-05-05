@@ -1,5 +1,4 @@
 package server;
-
 /**
  * Created by joaosubtil on 04/05/16.
  */
@@ -9,42 +8,10 @@ import javax.xml.ws.Endpoint;
 
 
 @WebService()
-public class insulinCalc implements InsulinDoseCalculator{
+public class insulinCalc implements InsulinDoseCalculator {
 
     public insulinCalc() {
     }
-
-    /**
-     * Calculates the number of insulin units needed after one meal.
-     * <p>
-     * This method takes the amount of carbohydrate in a given meal, and returns
-     * the number of units of insulin needed after that meal. The returned
-     * number of units of insulin equals the carbohydrate dose plus the high
-     * blood sugar dose, which are computed as follows.
-     * <p>
-     * The carbohydrate dose equals the total grams of carbohydrates in the meal
-     * divided by the amount of carbohydrate disposed by one unit of insulin,
-     * corrected by taking into account the personal sensitivity to insulin.
-     * This dose equals <code>carbohydrateAmount / carbohydrateToInsulinRatio /
-     * personalSensitivity x 50</code>.
-     * <p>
-     * The high blood sugar dose equals the difference between the pre-meal
-     * blood sugar level and the target blood sugar level, divided by the
-     * personal sensitivity to insulin. This equals <code>(preMealBloodSugar -
-     * targetBloodSugar) / personalSensitivity</code>. The personal sensitivity
-     * may be estimated using <code>personalSensitivityToInsulin()</code>.
-     * <p>
-     * In the special case when the target blood sugar level is greater than the
-     * pre-meal blood sugar level, the return value of this method is zero (no
-     * insulin).
-     *
-     * @param carbohydrateAmount amount of carbohydrate in the meal, in grams
-     * @param carbohydrateToInsulinRatio carbohydrate grams disposed by one unit
-     * @param preMealBloodSugar pre-meal measured blood sugar level, in mg/dl
-     * @param targetBloodSugar prescribed target blood sugar level, in mg/dl
-     * @param personalSensitivity personal sensitivity to insulin
-     * @return the mealtime units of insulin needed, or -1 in case of error
-     */
 
     @Override  @WebMethod
     public int mealtimeInsulinDose(int carbohydrateAmount, int carbohydrateToInsulinRatio, int preMealBloodSugar, int targetBloodSugar, int personalSensitivity) {
@@ -73,7 +40,8 @@ public class insulinCalc implements InsulinDoseCalculator{
 
     }
 
-    @WebMethod @Override
+    @WebMethod
+    @Override
     public int backgroundInsulinDose(int bodyWeight) {
         return 0;
     }

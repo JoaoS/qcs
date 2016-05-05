@@ -1,7 +1,4 @@
-package server;
-
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
@@ -12,7 +9,7 @@ public class insulinCalcTest {
     @Test
     public void testMealtimeInsulinDose() throws Exception {
 
-        insulinCalc s = new insulinCalc();
+        insulinCalc s = new server.insulΩinCalc();
         System.out.println(s.mealtimeInsulinDose(1,1,1,1,1));
 
 
