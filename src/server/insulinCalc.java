@@ -91,17 +91,20 @@ public class insulinCalc implements InsulinDoseCalculator{
         float beta = 0;
         int i = 0;
 
-        if(physicalActivitySamples.length==bloodSugarDropSamples.length && physicalActivitySamples.length>=2 && physicalActivitySamples.length<=10 && bloodSugarDropSamples.length>=2 && bloodSugarDropSamples.length<=10){
-            SimpleRegression regression = new SimpleRegression(true);
-            for(i=0; i<physicalActivitySamples.length; i++) {
-                regression.addData(physicalActivitySamples[i], bloodSugarDropSamples[i]);
-            }
-            alpha =  (float)regression.getIntercept();
-            beta = (float)regression.getSlope();
+        try {
+            if (physicalActivitySamples.length == bloodSugarDropSamples.length && physicalActivitySamples.length >= 2 && physicalActivitySamples.length <= 10 && bloodSugarDropSamples.length >= 2 && bloodSugarDropSamples.length <= 10) {
+                SimpleRegression regression = new SimpleRegression(true);
+                for (i = 0; i < physicalActivitySamples.length; i++) {
+                    regression.addData(physicalActivitySamples[i], bloodSugarDropSamples[i]);
+                }
+                alpha = (float) regression.getIntercept();
+                beta = (float) regression.getSlope();
 
-        }
-        else{
-            System.out.println("It's not possible calculate personal sensitivity");
+            } else {
+                System.out.println("It's not possible calculate personal sensitivity");
+            }
+        }catch (Exception e){
+            System.out.println("Exception:" + e);
         }
         return Math.round(alpha + beta * physicalActivityLevel);
     }
