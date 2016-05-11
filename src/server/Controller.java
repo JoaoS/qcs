@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  */
 public class Controller {
 
-    protected String serviceURI;
+    private String serviceURI;
     private int CarbohydrateAmount;
     private int CarbohydrateToInsulinRatio;
     private int PreMealBloodSugar;
@@ -18,16 +18,17 @@ public class Controller {
     private int PhysicalActivityLevel;
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
+    private int result;
 
     public Controller(String incomingServiceURI){
-        serviceURI = incomingServiceURI;
+        setServiceURI(incomingServiceURI);
     }
 
     private void caller() throws Exception {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Integer> future;
 
-        switch (serviceURI){
+        switch (getServiceURI()){
 
             /*Meal Time Insulin Dose*/
             case "mealtimeInsulinDose":
@@ -46,7 +47,7 @@ public class Controller {
                 try {
                     System.out.println("Started..");
                     System.out.println(future.get(4, TimeUnit.SECONDS));
-                    System.out.println("The result is: " + taskMealtimeInsulinDose.getResult());
+                    setResult(taskMealtimeInsulinDose.getResult());
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
@@ -72,7 +73,7 @@ public class Controller {
                 try {
                     System.out.println("Started..");
                     System.out.println(future.get(4, TimeUnit.SECONDS));
-                    System.out.println("The result is: " + taskBackgroundInsulinDose.getResult());
+                    setResult(taskBackgroundInsulinDose.getResult());
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
@@ -99,7 +100,7 @@ public class Controller {
                 try {
                     System.out.println("Started..");
                     System.out.println(future.get(4, TimeUnit.SECONDS));
-                    System.out.println("The result is: " + taskPersonalSensivityToInsulin.getResult());
+                    setResult(taskPersonalSensivityToInsulin.getResult());
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
@@ -189,6 +190,22 @@ public class Controller {
 
     public void setBloodSugarDropSamples(int[] bloodSugarDropSamples) {
         BloodSugarDropSamples = bloodSugarDropSamples;
+    }
+
+    public String getServiceURI() {
+        return serviceURI;
+    }
+
+    public void setServiceURI(String serviceURI) {
+        this.serviceURI = serviceURI;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
     }
 }
 
