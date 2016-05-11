@@ -24,7 +24,7 @@ public class Controller {
         setServiceURI(incomingServiceURI);
     }
 
-    private void caller() throws Exception {
+    public void caller() throws Exception {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Integer> future;
 
