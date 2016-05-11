@@ -9,10 +9,10 @@ import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 
 
-@WebService(targetNamespace= " http://localhost:9000/insulinCalc")
-public class insulinCalc implements InsulinDoseCalculator {
+@WebService(targetNamespace= " http://localhost:9000/InsulinCalc")
+public class InsulinCalc implements InsulinDoseCalculator {
 
-    public insulinCalc() {
+    public InsulinCalc() {
     }
     /**
      * Calculates the number of insulin units needed after one meal.
@@ -57,7 +57,9 @@ public class insulinCalc implements InsulinDoseCalculator {
 
         else{
 
-            carbohydrate_dose =(( carbohydrateAmount / carbohydrateToInsulinRatio) /personalSensitivity) * 50;
+            carbohydrate_dose =carbohydrateAmount / carbohydrateToInsulinRatio;
+            carbohydrate_dose = carbohydrate_dose/personalSensitivity;
+            carbohydrate_dose = carbohydrate_dose *50;
 
             high_blood_sugar_dose = (preMealBloodSugar - targetBloodSugar) / personalSensitivity;
         }
@@ -108,8 +110,8 @@ public class insulinCalc implements InsulinDoseCalculator {
 
 
     public static void main(String[] argv) {
-        Object implementor = new insulinCalc ();
-        String address = "http://localhost:9000/insulinCalc";
+        Object implementor = new InsulinCalc();
+        String address = "http://localhost:9000/InsulinCalc";
         Endpoint.publish(address, implementor);
     }
 }
