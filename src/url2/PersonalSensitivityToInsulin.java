@@ -1,5 +1,5 @@
 
-package artifact2;
+package url2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +39,9 @@ import javax.xml.bind.annotation.XmlType;
 public class PersonalSensitivityToInsulin {
 
     protected int arg0;
-    @XmlElement(type = Integer.class)
+    @XmlElement(nillable = true)
     protected List<Integer> arg1;
-    @XmlElement(type = Integer.class)
+    @XmlElement(nillable = true)
     protected List<Integer> arg2;
 
     /**

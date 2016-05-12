@@ -1,5 +1,5 @@
 
-package artifact2;
+package url2;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the artifact2 package. 
+ * generated in the url2 package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -32,7 +32,7 @@ public class ObjectFactory {
     private final static QName _PersonalSensitivityToInsulin_QNAME = new QName("http://server/", "personalSensitivityToInsulin");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: artifact2
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: url2
      * 
      */
     public ObjectFactory() {

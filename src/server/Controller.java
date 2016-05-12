@@ -1,5 +1,6 @@
 package server;
 
+import java.util.*;
 import java.util.concurrent.*;
 
 
@@ -27,19 +28,19 @@ public class Controller {
     public void caller() throws Exception {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Integer> future;
-        artifact2.InsulinDoseCalculatorService servico = new artifact2.InsulinDoseCalculatorService();
-
-        artifact2.InsulinDoseCalculator interface_2 = servico.getInsulinDoseCalculatorPort();
-
-        interface_2.backgroundInsulinDose(50);
 
 
+    /**
+    *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
+    *
+    *
+    *
+    */
         switch (getServiceURI()){
 
             /*Meal Time Insulin Dose*/
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
-
 
                 future = executor.submit(taskMealtimeInsulinDose);
 
@@ -54,6 +55,12 @@ public class Controller {
                     System.out.println("Started..");
                     System.out.println(future.get(4, TimeUnit.SECONDS));
                     setResult(taskMealtimeInsulinDose.getResult());
+
+
+
+
+
+
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
@@ -69,17 +76,28 @@ public class Controller {
 
             /*Backgroung Insulin Dose*/
             case "backgroundInsulinDose":
+
                 TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-
                 future = executor.submit(taskBackgroundInsulinDose);
-
                 taskBackgroundInsulinDose.setBodyWeight(this.getBodyWeight());
 
 
                 try {
                     System.out.println("Started..");
-                    System.out.println(future.get(4, TimeUnit.SECONDS));
+
+                    future.get(4, TimeUnit.SECONDS);
+
                     setResult(taskBackgroundInsulinDose.getResult());
+
+                  /*
+                  future = executor.submit(interface_1.backgroundInsulinDose(50));
+
+
+                    url2.InsulinDoseCalculator_Service servico2 = new url2.InsulinDoseCalculator_Service();
+                    url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
+                    interface_2.backgroundInsulinDose(50);
+                    */
+
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
@@ -95,13 +113,34 @@ public class Controller {
 
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
+
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin= new TaskPersonalSensivityToInsulin();
-
                 future = executor.submit(taskPersonalSensivityToInsulin);
-
                 taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
                 taskPersonalSensivityToInsulin.setPhysicalActivitySamples(this.getPhysicalActivitySamples());
                 taskPersonalSensivityToInsulin.setBloodSugarDropSamples(this.getBloodSugarDropSamples());
+
+                //TEST
+                url2.InsulinDoseCalculator_Service servico2 = new url2.InsulinDoseCalculator_Service();
+               url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
+
+                List<Integer> activitySamples= new ArrayList<>();
+                int[] level1=this.getPhysicalActivitySamples();
+                System.out.println("list"+level1.toString());
+                for (int i=0;i< level1.length;i++){
+                    activitySamples.add(level1[i]);
+                    System.out.println(activitySamples.get(i));
+
+                }
+                List<Integer> bloodSamples= new ArrayList<>();
+                int[] level2=this.getBloodSugarDropSamples();
+                for (int i=0;i< level2.length;i++){
+                    bloodSamples.add(level2[i]);
+                    System.out.println(bloodSamples.get(i));
+                }
+
+                System.out.println("Foreign value= "+interface_2.personalSensitivityToInsulin(this.getPhysicalActivityLevel(),activitySamples, bloodSamples ));
+
 
                 try {
                     System.out.println("Started..");

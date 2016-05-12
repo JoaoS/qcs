@@ -1,5 +1,5 @@
 
-package artifact2;
+package url1;
 
 import java.util.List;
 import javax.jws.WebMethod;
@@ -32,8 +32,8 @@ public interface InsulinDoseCalculator {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "backgroundInsulinDose", targetNamespace = "http://server/", className = "artifact2.BackgroundInsulinDose")
-    @ResponseWrapper(localName = "backgroundInsulinDoseResponse", targetNamespace = "http://server/", className = "artifact2.BackgroundInsulinDoseResponse")
+    @RequestWrapper(localName = "backgroundInsulinDose", targetNamespace = "http://server/", className = "url1.BackgroundInsulinDose")
+    @ResponseWrapper(localName = "backgroundInsulinDoseResponse", targetNamespace = "http://server/", className = "url1.BackgroundInsulinDoseResponse")
     public int backgroundInsulinDose(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0);
@@ -48,8 +48,8 @@ public interface InsulinDoseCalculator {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "personalSensitivityToInsulin", targetNamespace = "http://server/", className = "artifact2.PersonalSensitivityToInsulin")
-    @ResponseWrapper(localName = "personalSensitivityToInsulinResponse", targetNamespace = "http://server/", className = "artifact2.PersonalSensitivityToInsulinResponse")
+    @RequestWrapper(localName = "personalSensitivityToInsulin", targetNamespace = "http://server/", className = "url1.PersonalSensitivityToInsulin")
+    @ResponseWrapper(localName = "personalSensitivityToInsulinResponse", targetNamespace = "http://server/", className = "url1.PersonalSensitivityToInsulinResponse")
     public int personalSensitivityToInsulin(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
@@ -70,8 +70,8 @@ public interface InsulinDoseCalculator {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "mealtimeInsulinDose", targetNamespace = "http://server/", className = "artifact2.MealtimeInsulinDose")
-    @ResponseWrapper(localName = "mealtimeInsulinDoseResponse", targetNamespace = "http://server/", className = "artifact2.MealtimeInsulinDoseResponse")
+    @RequestWrapper(localName = "mealtimeInsulinDose", targetNamespace = "http://server/", className = "url1.MealtimeInsulinDose")
+    @ResponseWrapper(localName = "mealtimeInsulinDoseResponse", targetNamespace = "http://server/", className = "url1.MealtimeInsulinDoseResponse")
     public int mealtimeInsulinDose(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,

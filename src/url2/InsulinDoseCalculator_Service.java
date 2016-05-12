@@ -1,5 +1,5 @@
 
-package artifact2;
+package url2;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,48 +17,48 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "InsulinDoseCalculatorService", targetNamespace = "http://server/", wsdlLocation = "http://qcsa1-ran1234.rhcloud.com/server/InsulinDoseCalculator?wsdl")
-public class InsulinDoseCalculatorService
+@WebServiceClient(name = "InsulinDoseCalculator", targetNamespace = "http://server/", wsdlLocation = "http://qcsproject1-qcsproject.rhcloud.com/InsulinDoseCalculator?wsdl")
+public class InsulinDoseCalculator_Service
     extends Service
 {
 
-    private final static URL INSULINDOSECALCULATORSERVICE_WSDL_LOCATION;
-    private final static WebServiceException INSULINDOSECALCULATORSERVICE_EXCEPTION;
-    private final static QName INSULINDOSECALCULATORSERVICE_QNAME = new QName("http://server/", "InsulinDoseCalculatorService");
+    private final static URL INSULINDOSECALCULATOR_WSDL_LOCATION;
+    private final static WebServiceException INSULINDOSECALCULATOR_EXCEPTION;
+    private final static QName INSULINDOSECALCULATOR_QNAME = new QName("http://server/", "InsulinDoseCalculator");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://qcsa1-ran1234.rhcloud.com/server/InsulinDoseCalculator?wsdl");
+            url = new URL("http://qcsproject1-qcsproject.rhcloud.com/InsulinDoseCalculator?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
-        INSULINDOSECALCULATORSERVICE_WSDL_LOCATION = url;
-        INSULINDOSECALCULATORSERVICE_EXCEPTION = e;
+        INSULINDOSECALCULATOR_WSDL_LOCATION = url;
+        INSULINDOSECALCULATOR_EXCEPTION = e;
     }
 
-    public InsulinDoseCalculatorService() {
-        super(__getWsdlLocation(), INSULINDOSECALCULATORSERVICE_QNAME);
+    public InsulinDoseCalculator_Service() {
+        super(__getWsdlLocation(), INSULINDOSECALCULATOR_QNAME);
     }
 
-    public InsulinDoseCalculatorService(WebServiceFeature... features) {
-        super(__getWsdlLocation(), INSULINDOSECALCULATORSERVICE_QNAME, features);
+    public InsulinDoseCalculator_Service(WebServiceFeature... features) {
+        super(__getWsdlLocation(), INSULINDOSECALCULATOR_QNAME, features);
     }
 
-    public InsulinDoseCalculatorService(URL wsdlLocation) {
-        super(wsdlLocation, INSULINDOSECALCULATORSERVICE_QNAME);
+    public InsulinDoseCalculator_Service(URL wsdlLocation) {
+        super(wsdlLocation, INSULINDOSECALCULATOR_QNAME);
     }
 
-    public InsulinDoseCalculatorService(URL wsdlLocation, WebServiceFeature... features) {
-        super(wsdlLocation, INSULINDOSECALCULATORSERVICE_QNAME, features);
+    public InsulinDoseCalculator_Service(URL wsdlLocation, WebServiceFeature... features) {
+        super(wsdlLocation, INSULINDOSECALCULATOR_QNAME, features);
     }
 
-    public InsulinDoseCalculatorService(URL wsdlLocation, QName serviceName) {
+    public InsulinDoseCalculator_Service(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public InsulinDoseCalculatorService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
+    public InsulinDoseCalculator_Service(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
         super(wsdlLocation, serviceName, features);
     }
 
@@ -85,10 +85,10 @@ public class InsulinDoseCalculatorService
     }
 
     private static URL __getWsdlLocation() {
-        if (INSULINDOSECALCULATORSERVICE_EXCEPTION!= null) {
-            throw INSULINDOSECALCULATORSERVICE_EXCEPTION;
+        if (INSULINDOSECALCULATOR_EXCEPTION!= null) {
+            throw INSULINDOSECALCULATOR_EXCEPTION;
         }
-        return INSULINDOSECALCULATORSERVICE_WSDL_LOCATION;
+        return INSULINDOSECALCULATOR_WSDL_LOCATION;
     }
 
 }
