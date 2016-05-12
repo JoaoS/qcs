@@ -27,6 +27,12 @@ public class Controller {
     public void caller() throws Exception {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Integer> future;
+        artifact2.InsulinDoseCalculatorService servico = new artifact2.InsulinDoseCalculatorService();
+
+        artifact2.InsulinDoseCalculator interface_2 = servico.getInsulinDoseCalculatorPort();
+
+        interface_2.backgroundInsulinDose(50);
+
 
         switch (getServiceURI()){
 

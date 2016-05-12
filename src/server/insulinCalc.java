@@ -9,7 +9,7 @@ import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 
 
-@WebService(targetNamespace= " http://localhost:9000/InsulinCalc")
+@WebService(targetNamespace= "http://localhost:9000/InsulinCalc")
 public class InsulinCalc implements InsulinDoseCalculator {
 
     public InsulinCalc() {
@@ -54,6 +54,7 @@ public class InsulinCalc implements InsulinDoseCalculator {
         if(targetBloodSugar > preMealBloodSugar){
             return 0;
         }
+
 
         else{
 
