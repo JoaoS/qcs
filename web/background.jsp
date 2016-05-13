@@ -17,13 +17,13 @@
             <div class="heading">
                 <div style="float:left; width:55%">
                     <h2 style="float:left; width:75%">Background Insulin Dose</h2>
-                    <h2 style="float:right; color:red">9U</h2>
+                    <h2 style="float:right; color:red" id="totalInsulin">${totalInsulin}</h2>
                 </div>
                 <div style="float:left; width:55%">
                     <form action="./BackgroundServlet" method="POST">
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Weight in kilograms: </h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="mealCarbohydrates" placeholder="40kg - 130kg" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" id="mealCarbohydrates" name="mealCarbohydrates" placeholder="40kg - 130kg" required="required">
                         </div>
                         <button style="float:left; width:100%" type="submit" name="action" value="Calculation" class="float" onClick="enableButton()">Calculate Insulin Dose</button>
                     </form>
@@ -32,18 +32,31 @@
                     </form>
                 </div>
 
-                <form action="./DetailsServlet" method="POST">
+                <form action="./DetailsServlet" method="POST" id="form2">
                     <div style="float:right; width:30%">
-                        <button style="float:right; width:100%;  margin-top: 1%" type="submit"  name="action" value="Details" class="float" id="detailButton" disabled>Show Technical Details</button>
-                        <h3 style="color:white; margin:20% 0">Number of web services: 3</h3>
+                        <button style="float:right; width:100%; margin-top: 1%" type="submit"  id="detailButton" name="action" value="Details" class="float" onClick="activate();">Show Technical Details</button>
+                        <h3 style="color:white; margin:20% 0">${detailsInfo}</h3>
                     </div>
                 </form>
 
             </div>
         </div>
         <script>
-            function enableButton() {
-                document.getElementById("detailButton").disabled = false;
+            function activate(){
+                if(document.getElementsByTagName("h2").item(1).hasChildNodes()){
+                    document.getElementById("detailButton").disabled = false;
+                    sessionStorage.removeItem("totalInsulin");
+                    document.getElementById('form2').onsubmit = function(){
+                        return true;
+                    }
+                }
+                else{
+                    alert("Need to calculate something!")
+                    document.getElementById("detailButton").disabled = true;
+                    document.getElementById('form2').onsubmit = function(){
+                        return false;
+                    }
+                }
             }
         </script>
     </body>

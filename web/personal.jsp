@@ -24,27 +24,27 @@
                     <form action="./PersonalServlet" id="form" method="POST">
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Total grams of carbohydrates in the meal: </h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="mealCarbohydrates" placeholder="60g - 120g" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="mealCarbohydrates" type="number" name="mealCarbohydrates" placeholder="60g - 120g" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Total grams of carbohydrates processed by 1 unit of rapid acting insulin:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="unitCarbohydrates" placeholder="10g/unit - 15g/unit" value="12" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="unitCarbohydrates" type="number" name="unitCarbohydrates" placeholder="10g/unit - 15g/unit" value="12" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Blood sugar level before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="bloodLevel" placeholder="120mg/dl - 250mg/dl" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id ="bloodLevel" type="number" name="bloodLevel" placeholder="120mg/dl - 250mg/dl" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Target blood sugar before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="bloodTarget" placeholder="80mg/dl - 120mg/dl" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="bloodTarget" type="number" name="bloodTarget" placeholder="80mg/dl - 120mg/dl" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Today's physical activity level:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" name="todayActivity" placeholder="0 - 10" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="todayActivity" type="number" name="todayActivity" placeholder="0 - 10" required="required">
                         </div>
 
                         <div style="width: 100%">
@@ -52,8 +52,8 @@
                             <input style="float:right; width:5%; height:50px;" type="button" name="action" value="+" class="float" onClick="addInputActivity('dynamicInputActivity');">
                             <div style="width:100%">
                                 <div id="dynamicInputActivity">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
                                 </div>
                             </div>
                         </div>
@@ -63,8 +63,8 @@
                             <input style="float:right; width:5%; height:50px" type="button" name="action" value="+" class="float" onClick="addInputBlood('dynamicInputBlood');">
                             <div style="width:100%">
                                 <div id="dynamicInputBlood">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
                                 </div>
                             </div>
                         </div>
@@ -75,9 +75,9 @@
                         <button style="float:left; width:100%" type="submit" name="action" value="Cancel" class="float">Cancel</button>
                     </form>
                 </div>
-                <form action="./DetailsServlet" method="POST">
+                <form action="./DetailsServlet" method="POST" id="form2">
                     <div style="float:right; width:30%">
-                        <button style="float:right; width:100%; margin-top: 1%" type="submit"  id="detailButton" name="action" value="Details" class="float" disabled>Show Technical Details</button>
+                        <button style="float:right; width:100%; margin-top: 1%" type="submit"  id="detailButton" name="action" value="Details" class="float" onClick="activate();">Show Technical Details</button>
                         <h3 style="color:white; margin:20% 0">${detailsInfo}</h3>
                     </div>
                 </form>
@@ -88,13 +88,31 @@
             var bloodCounter = 2;
             var limit = 10;
 
+
+            function activate(){
+                if(document.getElementsByTagName("h2").item(1).hasChildNodes()){
+                    document.getElementById("detailButton").disabled = false;
+                    sessionStorage.removeItem("totalInsulin");
+                    document.getElementById('form2').onsubmit = function(){
+                        return true;
+                    }
+                }
+                else{
+                    alert("Need to calculate something!")
+                    document.getElementById("detailButton").disabled = true;
+                    document.getElementById('form2').onsubmit = function(){
+                        return false;
+                    }
+                }
+            }
+
             function addInputActivity(divName){
                 if (activityCounter == limit)  {
                     alert("You have reached the limit of adding " + activityCounter + " inputs");
                 }
                 else {
                     var newdiv = document.createElement('div');
-                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' type='number' name='samplesActivity[]' placeholder='0 - 10'  required='required'>";
+                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesActivity' type='number' name='samplesActivity[]' placeholder='0 - 10'  required='required'>";
                     document.getElementById(divName).appendChild(newdiv);
                     activityCounter++;
                 }
@@ -106,10 +124,28 @@
                 }
                 else {
                     var newdiv = document.createElement('div');
-                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' type='number' name='samplesBlood[]' placeholder='15mg/dl - 100mg/dl'  required='required'>";
+                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesBlood' type='number' name='samplesBlood[]' placeholder='15mg/dl - 100mg/dl'  required='required'>";
                     document.getElementById(divName).appendChild(newdiv);
                     bloodCounter++;
                 }
+            }
+            
+            function allInputsFilled() {
+                var fields = ["mealCarbohydrates", "unitCarbohydrates", "bloodLevel", "bloodTarget", "todayActivity", "samplesActivity[]", "samplesBlood[]"];
+                for (var i=0; i< fields.length-2; i++){
+                    if(document.getElementById(fields[i]).value==""){
+                        return false;
+                    }
+                }
+
+                var samplesA = document.getElementsByName("samplesActivity[]");
+                var samplesB = document.getElementsByName("samplesBlood[]");
+                for (var i=0; i<samplesA.length; i++){
+                    if(samplesA[i].value=="" || samplesB[i].value==""){
+                        return false;
+                    }
+                }
+                return true;
             }
 
             function verifyIfOdd(){
@@ -121,9 +157,10 @@
                 }
 
                 else{
-                    document.getElementById("detailButton").disabled = false;
-                    document.getElementById('form').onsubmit = function(){
-                        return true;
+                    if(allInputsFilled()){
+                        document.getElementById('form').onsubmit = function(){
+                            return true;
+                        }
                     }
                 }
             }

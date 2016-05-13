@@ -21,8 +21,30 @@ public class DetailsServlet extends HttpServlet {
             request.getRequestDispatcher("menu.jsp").forward(request,response);
         }
         else if(request.getParameter("action").equals("Details")){
-            session.setAttribute("detailsInfo","Number of web services: 1<br>Result: 9<br>Majority result: Cenas");
-            request.getRequestDispatcher("personal.jsp").forward(request,response);
+            String detailResponse = "";
+            int N_WebServices = 3;
+            int majorityResult = 9;
+            int[] values  = {9,8,9};
+
+            detailResponse += "Number of web services: " + N_WebServices + "<br>";
+            for(int i=0; i <N_WebServices; i++){
+                detailResponse += "&emsp;&emsp;Web service [" + (i+1) + "]: " + values[i] + "<br>";
+            }
+            detailResponse += "<br>Majority Result: " + majorityResult;
+            session.setAttribute("detailsInfo",detailResponse);
+            session.setAttribute("totalInsulin","");
+
+
+            String servletName = request.getHeader("referer");
+            if(servletName.contains("PersonalServlet")) {
+                request.getRequestDispatcher("personal.jsp").forward(request, response);
+            }
+            else if(servletName.contains("StandardServlet")) {
+                request.getRequestDispatcher("standard.jsp").forward(request, response);
+            }
+            else if(servletName.contains("BackgroundServlet")) {
+                request.getRequestDispatcher("background.jsp").forward(request, response);
+            }
         }
     }
 

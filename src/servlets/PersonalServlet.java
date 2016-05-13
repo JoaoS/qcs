@@ -1,6 +1,6 @@
 package servlets;
 
-import server.Controller;
+import methods.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Created by danielamaral on 11/05/16.
+ * Created by Christophe on 10/05/2016.
  */
-
 @WebServlet("/PersonalServlet")
 public class PersonalServlet extends HttpServlet {
 
