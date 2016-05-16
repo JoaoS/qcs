@@ -1,6 +1,6 @@
 package servlets;
 
-import methods.Controller;
+import server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * Created by Christophe on 10/05/2016.
@@ -47,7 +50,13 @@ public class StandardServlet extends HttpServlet {
 
             try {
                 controller.caller();
-                int units = controller.getResult();
+
+                ArrayList<Integer> units = controller.getOutput();
+
+
+                for(int i=0;i<units.size();i++) {
+                    System.out.println("service "+i+" "+units.get(i)+"\n");
+                }
 
                 session.setAttribute("totalInsulin",units+"U");
                 session.removeAttribute("detailsInfo");

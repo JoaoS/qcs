@@ -1,7 +1,11 @@
 package server;
 
+import javafx.concurrent.Task;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.*;
 
 
@@ -20,7 +24,8 @@ public class Controller {
     private int PhysicalActivityLevel;
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
-    private ArrayList<Integer> result;
+    public List<Future<Integer>> futureList = new ArrayList<Future<Integer>>();
+    private ArrayList<Integer> output = new ArrayList<Integer>();
     private int nPools = 3;
 
     public Controller(String incomingServiceURI){
@@ -41,13 +46,13 @@ public class Controller {
         Future<Integer> result;
 
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nPools);
-        List<Future<Integer>> resultList = new ArrayList<>();
+
 
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
 
 
-        switch (getServiceURI()){
+        switch (getServiceURI()) {
 
             /*Meal Time Insulin Dose
             case "mealtimeInsulinDose":
@@ -135,37 +140,45 @@ public class Controller {
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
 
-                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin= new TaskPersonalSensivityToInsulin();
+                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
                 TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1();
                 TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2();
 
-                intArrayToIntList(getPhysicalActivitySamples(),activitySamples);
-                intArrayToIntList(getBloodSugarDropSamples(),bloodSamples);
+                intArrayToIntList(getPhysicalActivitySamples(), activitySamples);
+                intArrayToIntList(getBloodSugarDropSamples(), bloodSamples);
 
                 taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
                 taskPersonalSensivityToInsulin.setPhysicalActivitySamples(activitySamples);
                 taskPersonalSensivityToInsulin.setBloodSugarDropSamples(bloodSamples);
 
+                List<Callable<Integer>> pool = new ArrayList<Callable<Integer>>();
+                pool.add(taskPersonalSensivityToInsulinURL1);
+                pool.add(taskPersonalSensivityToInsulinURL2);
+                pool.add(taskPersonalSensivityToInsulin);
 
-                result = executor.submit(taskPersonalSensivityToInsulin);
-                resultList.add(result);
-                result = executor.submit(taskPersonalSensivityToInsulinURL1);
-                resultList.add(result);
-                result = executor.submit(taskPersonalSensivityToInsulinURL2);
-                resultList.add(result);
+                futureList = executor.invokeAll(pool, 4, TimeUnit.SECONDS);
 
-                for(Future<Integer> future : resultList){
-                    try
-                    {
-                        System.out.println("Future result is - " + " - " + future.get() + "; And Task done is " + future.isDone());
-                    }
-                    catch (InterruptedException | ExecutionException e)
-                    {
-                        e.printStackTrace();
+                for (Future<Integer> future : futureList) {
+                    try {
+                        //print the return value of Future, notice the output delay in console
+                        // because Future.get() waits for task to get completed
+                        if (!future.isCancelled())
+                            output.add(future.get());
+
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                        System.out.println("Done :)");
+                        //Thread.currentThread().interrupt();
+                    } catch (ExecutionException e) {
+                        //e.printStackTrace();
+                        System.out.println("Done :)");
+                        //Thread.currentThread().interrupt();
                     }
                 }
-                executor.shutdown();
 
+
+                executor.shutdown();
+        }
 
 /*
                 try {
@@ -197,7 +210,7 @@ public class Controller {
         }
 
 
-    }
+
 
     /**
      *
@@ -236,7 +249,7 @@ public class Controller {
 
 
 
-return true;
+    return true;
 
     }
 
@@ -344,20 +357,20 @@ return true;
         this.serviceURI = serviceURI;
     }
 
-
-    public ArrayList<Integer> getResult() {
-        return result;
-    }
-
-    public void setResult(ArrayList<Integer> result) {
-        this.result = result;
-    }
-
     public void intArrayToIntList(int[] input,List<Integer> output){
 
         for (int i=0;i< input.length;i++){
             output.add(input[i]);
         }
+    }
+
+
+    public ArrayList<Integer> getOutput() {
+        return output;
+    }
+
+    public void setOutput(ArrayList<Integer> output) {
+        this.output = output;
     }
 }
 
