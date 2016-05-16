@@ -22,25 +22,6 @@
 
                 <div style="float:left; width:55%">
                     <form action="./PersonalServlet" id="form" method="POST">
-                        <div style="width: 100%">
-                            <h3 style="float:left; width:75%">Total grams of carbohydrates in the meal: </h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="mealCarbohydrates" type="number" name="mealCarbohydrates" placeholder="60g - 120g" required="required">
-                        </div>
-
-                        <div style="width: 100%">
-                            <h3 style="float:left; width:75%">Total grams of carbohydrates processed by 1 unit of rapid acting insulin:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="unitCarbohydrates" type="number" name="unitCarbohydrates" placeholder="10g/unit - 15g/unit" value="12" required="required">
-                        </div>
-
-                        <div style="width: 100%">
-                            <h3 style="float:left; width:75%">Blood sugar level before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id ="bloodLevel" type="number" name="bloodLevel" placeholder="120mg/dl - 250mg/dl" required="required">
-                        </div>
-
-                        <div style="width: 100%">
-                            <h3 style="float:left; width:75%">Target blood sugar before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="bloodTarget" type="number" name="bloodTarget" placeholder="80mg/dl - 120mg/dl" required="required">
-                        </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Today's physical activity level:</h3>
