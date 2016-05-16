@@ -21,20 +21,27 @@ public class Controller {
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
     private ArrayList<Integer> result;
+    private int nPools = 3;
 
     public Controller(String incomingServiceURI){
         setServiceURI(incomingServiceURI);
     }
 
     public void caller() throws Exception {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        /*ExecutorService executor = Executors.newSingleThreadExecutor();
         ExecutorService executor1 = Executors.newSingleThreadExecutor();
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
 
-        Future<Integer> future;
+
+
         Future<Integer> future1;
         Future<Integer> future2;
+        */
 
+        Future<Integer> result;
+
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nPools);
+        List<Future<Integer>> resultList = new ArrayList<>();
 
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
@@ -56,7 +63,7 @@ public class Controller {
     */
         switch (getServiceURI()){
 
-            /*Meal Time Insulin Dose*/
+            /*Meal Time Insulin Dose
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
                 TaskURL1 taskMealtimeInsulinDoseURL1 = new TaskURL1();
@@ -99,7 +106,7 @@ public class Controller {
                 executor2.shutdown();
                 break;
 
-            /*Backgroung Insulin Dose*/
+            Backgroung Insulin Dose
             case "backgroundInsulinDose":
                 TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
                 TaskURL1 taskBackgroundInsulinDoseURL1 = new TaskURL1();
@@ -138,9 +145,10 @@ public class Controller {
                 executor1.shutdown();
                 executor2.shutdown();
                 break;
-
+*/
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
+
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin= new TaskPersonalSensivityToInsulin();
                 TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1();
                 TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2();
@@ -167,11 +175,27 @@ public class Controller {
                 taskPersonalSensivityToInsulin.setBloodSugarDropSamples(bloodSamples);
 
 
-                future = executor.submit(taskPersonalSensivityToInsulin);
-                future1 = executor1.submit(taskPersonalSensivityToInsulinURL1);
-                future2 = executor2.submit(taskPersonalSensivityToInsulinURL2);
+                result = executor.submit(taskPersonalSensivityToInsulin);
+                resultList.add(result);
+                result = executor.submit(taskPersonalSensivityToInsulinURL1);
+                resultList.add(result);
+                result = executor.submit(taskPersonalSensivityToInsulinURL2);
+                resultList.add(result);
+
+                for(Future<Integer> future : resultList){
+                    try
+                    {
+                        System.out.println("Future result is - " + " - " + future.get() + "; And Task done is " + future.isDone());
+                    }
+                    catch (InterruptedException | ExecutionException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                executor.shutdown();
 
 
+/*
                 try {
                     System.out.println("Started..");
 
@@ -197,7 +221,7 @@ public class Controller {
 
                 executor.shutdownNow();
                 break;
-
+*/
         }
 
 
