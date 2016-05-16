@@ -18,9 +18,16 @@ public class CancelServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         if(request.getParameter("action").equals("Cancel")){
-            session.setAttribute("totalInsulin","");
-            session.setAttribute("detailsInfo","");
-            request.getRequestDispatcher("menu.jsp").forward(request,response);
+            if(session.getAttribute("comeFromStandard").equals("true")){
+                session.setAttribute("comeFromStandard","");
+                session.setAttribute("totalInsulin", "");
+                request.getRequestDispatcher("standard.jsp").forward(request, response);
+            }
+            else {
+                session.setAttribute("totalInsulin", "");
+                session.setAttribute("detailsInfo", "");
+                request.getRequestDispatcher("menu.jsp").forward(request, response);
+            }
         }
     }
 

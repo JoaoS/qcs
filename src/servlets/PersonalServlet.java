@@ -1,6 +1,6 @@
 package servlets;
 
-import server.Controller;
+import methods.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by Christophe on 10/05/2016.
@@ -22,6 +21,7 @@ public class PersonalServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(request.getParameter("action").equals("Calculation")){
+
             int physicalActivityLevel = Integer.parseInt(request.getParameter("todayActivity"));
 
             String[] activitySamples = request.getParameterValues("samplesActivity[]");
@@ -44,13 +44,11 @@ public class PersonalServlet extends HttpServlet {
             controller.setBloodSugarDropSamples(bloodSugarDropSamples);
             try {
                 controller.caller();
-                ArrayList<Integer> units = controller.getResult();
-                for(int i=0;i<units.size();i++) {
-                    System.out.println("service "+i+" "+units.get(i)+"\n");
-                }
-                session.setAttribute("totalInsulin:", units.get(0) + "U");
-                session.removeAttribute("detailsInfo");
+                int units = controller.getResult();
 
+                session.setAttribute("totalInsulin",units+"U");
+                session.removeAttribute("detailsInfo");
+                session.setAttribute("TextValue5",units);
             } catch (Exception e) {
                 e.printStackTrace();
             }
