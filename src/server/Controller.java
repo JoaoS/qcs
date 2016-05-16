@@ -20,7 +20,7 @@ public class Controller {
     private int PhysicalActivityLevel;
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
-    private ArrayList<Integer> result;
+    private ArrayList<Integer> result= new ArrayList<>();
 
     public Controller(String incomingServiceURI){
         setServiceURI(incomingServiceURI);
@@ -39,21 +39,7 @@ public class Controller {
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
 
-        /*URL 1
-        url1.InsulinDoseCalculatorService servico1 = new url1.InsulinDoseCalculatorService();
-        url1.InsulinDoseCalculator interface1 = servico1.getInsulinDoseCalculatorPort();
 
-        URL 2
-        url2.InsulinDoseCalculator_Service servico2 = new url2.InsulinDoseCalculator_Service();
-        url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
-        */
-
-    /**
-    *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
-    *
-    *
-    *
-    */
         switch (getServiceURI()){
 
             /*Meal Time Insulin Dose*/
@@ -141,26 +127,13 @@ public class Controller {
 
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
+
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin= new TaskPersonalSensivityToInsulin();
                 TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1();
                 TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2();
 
                 intArrayToIntList(getPhysicalActivitySamples(),activitySamples);
                 intArrayToIntList(getBloodSugarDropSamples(),bloodSamples);
-
-                /*int[] level1=this.getPhysicalActivitySamples();
-                System.out.println("list"+level1.toString());
-                for (int i=0;i< level1.length;i++){
-                    activitySamples.add(level1[i]);
-                    System.out.println(activitySamples.get(i));
-
-                }
-
-                int[] level2=this.getBloodSugarDropSamples();
-                for (int i=0;i< level2.length;i++){
-                    bloodSamples.add(level2[i]);
-                    System.out.println(bloodSamples.get(i));
-                }*/
 
                 taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
                 taskPersonalSensivityToInsulin.setPhysicalActivitySamples(activitySamples);
@@ -173,21 +146,12 @@ public class Controller {
 
 
                 try {
-                    System.out.println("Started..");
-
-                    future.get(4, TimeUnit.SECONDS);
-                    future1.get(4, TimeUnit.SECONDS);
-                    future2.get(4, TimeUnit.SECONDS);
-
+                    System.out.println("Started 1 ...");
+                    future.get(4, TimeUnit.SECONDS);//nosso
                     result.add(taskPersonalSensivityToInsulin.getResult());
-                    result.add(taskPersonalSensivityToInsulinURL1.getResult());
-                    result.add(taskPersonalSensivityToInsulinURL2.getResult());
-
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
-                    future1.cancel(true);
-                    future2.cancel(true);
                     System.out.println("Timeout Exception!");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -195,7 +159,33 @@ public class Controller {
                     e.printStackTrace();
                 }
 
+                try{
+                    future1.get(4, TimeUnit.SECONDS);
+                    result.add(taskPersonalSensivityToInsulinURL1.getResult());
+                }catch(TimeoutException e){
+                    future1.cancel(true);
+                    System.out.println("Timeout Exception!");
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                try{
+                    future2.get(4, TimeUnit.SECONDS);
+                    result.add(taskPersonalSensivityToInsulinURL2.getResult());
+                }catch(TimeoutException e){
+                    future2.cancel(true);
+                    System.out.println("Timeout Exception!");
+                }catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
                 executor.shutdownNow();
+                executor1.shutdown();
+                executor2.shutdown();
                 break;
 
         }
@@ -205,18 +195,19 @@ public class Controller {
 
     /**
      *
-     * @param value1
-     * @param value2
-     * @param value3
      * @return
+     * timed out values have to bear the -1 value
      */
-    public boolean voterMechanism(int value1, int value2, int value3){
+    public boolean voterMechanism(ArrayList<Integer> values){
 
 
         //todo valerá a a pena devolver dados não binários?
+        int value1=values.get(0);
+        int value2=values.get(1);
+        int value3=values.get(2);
 
 
- 	    //all timeouts
+        //all timeouts
         if (value1==-1 && value2==-1 && value3==-1) {
                   //
             System.out.println("All timeouts");
@@ -224,6 +215,14 @@ public class Controller {
 
         }
 
+        //only one value, two timeouts
+       /*
+            ::a1 > 0 && a2 <= 0 && a3 <= 0 ->	printf("Reject value 1\n");
+            ::a2 > 0 && a1 <= 0 && a3 <= 0 ->   printf("Reject value 2\n");
+            ::a3 > 0 && a1 <= 0 && a2 <= 0 ->	printf("Reject value 3\n");
+       */
+
+       // if (value1 > 0 && value2 ==-1 && value3==-1)
 
 
 
@@ -231,10 +230,7 @@ public class Controller {
 
 
 
-
-
-
-
+return true;
 
     }
 

@@ -134,10 +134,10 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
 
-        int[] activitySamples = new int[0];
+        int[] activitySamples = new int[2];
         intListToArray(getPhysicalActivitySamples(),activitySamples);
 
-        int[] bloodSamples = new int[0];
+        int[] bloodSamples = new int[2];
         intListToArray(getBloodSugarDropSamples(),bloodSamples);
 
         setResult(calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),activitySamples,bloodSamples));

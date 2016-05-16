@@ -3,6 +3,7 @@ package servlets;
 import server.Controller;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,10 @@ public class PersonalServlet extends HttpServlet {
             controller.setBloodSugarDropSamples(bloodSugarDropSamples);
             try {
                 controller.caller();
-                ArrayList<Integer> units = controller.getResult();
+                ArrayList<Integer> units;
+                units = controller.getResult();
+                System.out.println("Merda="+units.size());
+
                 for(int i=0;i<units.size();i++) {
                     System.out.println("service "+i+" "+units.get(i)+"\n");
                 }
