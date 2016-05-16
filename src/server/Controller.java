@@ -20,21 +20,28 @@ public class Controller {
     private int PhysicalActivityLevel;
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
-    private ArrayList<Integer> result= new ArrayList<>();
+    private ArrayList<Integer> result;
+    private int nPools = 3;
 
     public Controller(String incomingServiceURI){
         setServiceURI(incomingServiceURI);
     }
 
     public void caller() throws Exception {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        /*ExecutorService executor = Executors.newSingleThreadExecutor();
         ExecutorService executor1 = Executors.newSingleThreadExecutor();
         ExecutorService executor2 = Executors.newSingleThreadExecutor();
 
-        Future<Integer> future;
+
+
         Future<Integer> future1;
         Future<Integer> future2;
+        */
 
+        Future<Integer> result;
+
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nPools);
+        List<Future<Integer>> resultList = new ArrayList<>();
 
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
@@ -42,7 +49,7 @@ public class Controller {
 
         switch (getServiceURI()){
 
-            /*Meal Time Insulin Dose*/
+            /*Meal Time Insulin Dose
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
                 TaskURL1 taskMealtimeInsulinDoseURL1 = new TaskURL1();
@@ -85,7 +92,7 @@ public class Controller {
                 executor2.shutdown();
                 break;
 
-            /*Backgroung Insulin Dose*/
+            Backgroung Insulin Dose
             case "backgroundInsulinDose":
                 TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
                 TaskURL1 taskBackgroundInsulinDoseURL1 = new TaskURL1();
@@ -124,7 +131,7 @@ public class Controller {
                 executor1.shutdown();
                 executor2.shutdown();
                 break;
-
+*/
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
 
@@ -140,18 +147,43 @@ public class Controller {
                 taskPersonalSensivityToInsulin.setBloodSugarDropSamples(bloodSamples);
 
 
-                future = executor.submit(taskPersonalSensivityToInsulin);
-                future1 = executor1.submit(taskPersonalSensivityToInsulinURL1);
-                future2 = executor2.submit(taskPersonalSensivityToInsulinURL2);
+                result = executor.submit(taskPersonalSensivityToInsulin);
+                resultList.add(result);
+                result = executor.submit(taskPersonalSensivityToInsulinURL1);
+                resultList.add(result);
+                result = executor.submit(taskPersonalSensivityToInsulinURL2);
+                resultList.add(result);
+
+                for(Future<Integer> future : resultList){
+                    try
+                    {
+                        System.out.println("Future result is - " + " - " + future.get() + "; And Task done is " + future.isDone());
+                    }
+                    catch (InterruptedException | ExecutionException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                executor.shutdown();
 
 
+/*
                 try {
-                    System.out.println("Started 1 ...");
-                    future.get(4, TimeUnit.SECONDS);//nosso
+                    System.out.println("Started..");
+
+                    future.get(4, TimeUnit.SECONDS);
+                    future1.get(4, TimeUnit.SECONDS);
+                    future2.get(4, TimeUnit.SECONDS);
+
                     result.add(taskPersonalSensivityToInsulin.getResult());
+                    result.add(taskPersonalSensivityToInsulinURL1.getResult());
+                    result.add(taskPersonalSensivityToInsulinURL2.getResult());
+
                     System.out.println("Finished!");
                 } catch (TimeoutException e) {
                     future.cancel(true);
+                    future1.cancel(true);
+                    future2.cancel(true);
                     System.out.println("Timeout Exception!");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -159,35 +191,9 @@ public class Controller {
                     e.printStackTrace();
                 }
 
-                try{
-                    future1.get(4, TimeUnit.SECONDS);
-                    result.add(taskPersonalSensivityToInsulinURL1.getResult());
-                }catch(TimeoutException e){
-                    future1.cancel(true);
-                    System.out.println("Timeout Exception!");
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                try{
-                    future2.get(4, TimeUnit.SECONDS);
-                    result.add(taskPersonalSensivityToInsulinURL2.getResult());
-                }catch(TimeoutException e){
-                    future2.cancel(true);
-                    System.out.println("Timeout Exception!");
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
                 executor.shutdownNow();
-                executor1.shutdown();
-                executor2.shutdown();
                 break;
-
+*/
         }
 
 

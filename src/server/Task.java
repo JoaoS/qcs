@@ -24,8 +24,8 @@ class TaskMealtimeInsulinDose implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        setResult(calculator.mealtimeInsulinDose(getTaskCarbohydrateAmount(), getTaskCarbohydrateToInsulinRatio(), getTaskPreMealBloodSugar(), getTaskTargetBloodSugar(), getTaskPersonalSensitivity()));
-        return 0;
+        return calculator.mealtimeInsulinDose(getTaskCarbohydrateAmount(), getTaskCarbohydrateToInsulinRatio(), getTaskPreMealBloodSugar(), getTaskTargetBloodSugar(), getTaskPersonalSensitivity());
+
     }
 
 
@@ -94,8 +94,8 @@ class TaskBackgroundInsulinDose implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        setResult(calculator.backgroundInsulinDose(getBodyWeight()));
-        return 0;
+        return calculator.backgroundInsulinDose(getBodyWeight());
+
     }
 
 
@@ -140,8 +140,8 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
         int[] bloodSamples = new int[2];
         intListToArray(getBloodSugarDropSamples(),bloodSamples);
 
-        setResult(calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),activitySamples,bloodSamples));
-        return 0;
+        return calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),activitySamples,bloodSamples);
+
     }
 
     public void intListToArray(List<Integer> input,int[] output){
@@ -203,17 +203,18 @@ class TaskURL1 implements Callable<Integer> {
        switch (task){
            case "mealtimeInsulinDose":
                TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
-               setResult(interface_1.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity()));
-            break;
+               return  interface_1.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity());
+
 
            case "backgroundInsulinDose":
                TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-               setResult(interface_1.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight()));
-               break;
+               return interface_1.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight());
+
 
            case "personalSensitivityToInsulin":
                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-               setResult(interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples()));
+               return interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+
        }
         return 0;
     }
@@ -254,17 +255,17 @@ class TaskURL2 implements Callable<Integer> {
         switch (task){
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
-                setResult(interface_2.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity()));
-                break;
+                return interface_2.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity());
+
 
             case "backgroundInsulinDose":
                 TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-                setResult(interface_2.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight()));
-                break;
+                return interface_2.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight());
+
 
             case "personalSensitivityToInsulin":
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-                setResult(interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples()));
+                return interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
         }
         return 0;
     }

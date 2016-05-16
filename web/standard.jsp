@@ -23,30 +23,31 @@
                     <form action="./StandardServlet" method="POST" id="form">
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Total grams of carbohydrates in the meal: </h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="mealCarbohydrates" type="number" name="mealCarbohydrates" placeholder="60g - 120g" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" value='${TextValue1}' id="mealCarbohydrates" type="number" name="mealCarbohydrates" placeholder="60g - 120g" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Total grams of carbohydrates processed by 1 unit of rapid acting insulin:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="unitCarbohydrates" type="number" name="unitCarbohydrates" placeholder="10g/unit - 15g/unit" value="12" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="unitCarbohydrates" type="number" name="unitCarbohydrates" placeholder="10g/unit - 15g/unit" value='${TextValue2}' required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Blood sugar level before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id ="bloodLevel" type="number" name="bloodLevel" placeholder="120mg/dl - 250mg/dl" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" value='${TextValue3}' id ="bloodLevel" type="number" name="bloodLevel" placeholder="120mg/dl - 250mg/dl" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Target blood sugar before the meal:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="bloodTarget" type="number" name="bloodTarget" placeholder="80mg/dl - 120mg/dl" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" value='${TextValue4}' id="bloodTarget" type="number" name="bloodTarget" placeholder="80mg/dl - 120mg/dl" required="required">
                         </div>
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Individual sensitivity:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="sensitivity" type="number" name="sensitivity" placeholder="15mg/dl - 100mg/dl" value="50" required="required">
+                            <button style="float:right; width:25%" type="submit" name="action" value="SensitivityCalculation" onClick="disableRequired()" class="float">Calculate New Sensitivity</button>
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="sensitivity" type="number" name="sensitivity" placeholder="15mg/dl - 100mg/dl" value='${TextValue5}' required="required">
                         </div>
 
-                        <button style="float:left; width:100%" id="calculation" type="submit" name="action" value="Calculation" class="float">Calculate Insulin Dose</button>
+                        <button style="float:left; width:100%" id="calculation" type="submit" name="action" value="Calculation" class="float" onClick="enableRequired()">Calculate Insulin Dose</button>
                     </form>
                     <form action="./CancelServlet" method="POST">
                             <button style="float:left; width:100%" type="submit" name="action" value="Cancel" class="float">Cancel</button>
@@ -64,6 +65,22 @@
         </div>
 
         <script>
+            function disableRequired() {
+                document.getElementById("mealCarbohydrates").required = false;
+                document.getElementById("unitCarbohydrates").required = false;
+                document.getElementById("bloodLevel").required = false;
+                document.getElementById("bloodTarget").required = false;
+                document.getElementById("sensitivity").required = false;
+            }
+
+            function enableRequired() {
+                document.getElementById("mealCarbohydrates").required = true;
+                document.getElementById("unitCarbohydrates").required = true;
+                document.getElementById("bloodLevel").required = true;
+                document.getElementById("bloodTarget").required = true;
+                document.getElementById("sensitivity").required = true;
+            }
+
 
             function activate(){
                 if(document.getElementsByTagName("h2").item(1).hasChildNodes()){

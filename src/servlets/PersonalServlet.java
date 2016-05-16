@@ -1,6 +1,6 @@
 package servlets;
 
-import server.Controller;
+import methods.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by Christophe on 10/05/2016.
@@ -23,6 +22,7 @@ public class PersonalServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if(request.getParameter("action").equals("Calculation")){
+
             int physicalActivityLevel = Integer.parseInt(request.getParameter("todayActivity"));
 
             String[] activitySamples = request.getParameterValues("samplesActivity[]");
@@ -45,6 +45,7 @@ public class PersonalServlet extends HttpServlet {
             controller.setBloodSugarDropSamples(bloodSugarDropSamples);
             try {
                 controller.caller();
+<<<<<<< HEAD
                 ArrayList<Integer> units;
                 units = controller.getResult();
                 System.out.println("Merda="+units.size());
@@ -54,7 +55,13 @@ public class PersonalServlet extends HttpServlet {
                 }
                 session.setAttribute("totalInsulin:", units.get(0) + "U");
                 session.removeAttribute("detailsInfo");
+=======
+                int units = controller.getResult();
+>>>>>>> 2acb8d1f0efe0b1355317fdce427ad3effe2b052
 
+                session.setAttribute("totalInsulin",units+"U");
+                session.removeAttribute("detailsInfo");
+                session.setAttribute("TextValue5",units);
             } catch (Exception e) {
                 e.printStackTrace();
             }

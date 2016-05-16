@@ -1,6 +1,6 @@
 package servlets;
 
-import server.Controller;
+import methods.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by Christophe on 10/05/2016.
@@ -21,6 +20,16 @@ public class StandardServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if(request.getParameter("action").equals("SensitivityCalculation")){
+            session.setAttribute("comeFromStandard","true");
+            session.setAttribute("TextValue1",request.getParameter("mealCarbohydrates"));
+            session.setAttribute("TextValue2",request.getParameter("unitCarbohydrates"));
+            session.setAttribute("TextValue3",request.getParameter("bloodLevel"));
+            session.setAttribute("TextValue4",request.getParameter("bloodTarget"));
+            session.setAttribute("TextValue5",request.getParameter("sensitivity"));
+            request.getRequestDispatcher("personal.jsp").forward(request,response);
+        }
+
         if(request.getParameter("action").equals("Calculation")){
             int carbohydrateAmount = Integer.parseInt(request.getParameter("mealCarbohydrates"));
             int carbohydrateToInsulinRatio = Integer.parseInt(request.getParameter("unitCarbohydrates"));
@@ -38,11 +47,9 @@ public class StandardServlet extends HttpServlet {
 
             try {
                 controller.caller();
-                ArrayList<Integer> units = controller.getResult();
-                for(int i=0;i<units.size();i++) {
-                    System.out.println("service "+i+" "+units.get(i)+"\n");
-                }
-                session.setAttribute("totalInsulin:", units.get(0) + "U");
+                int units = controller.getResult();
+
+                session.setAttribute("totalInsulin",units+"U");
                 session.removeAttribute("detailsInfo");
             } catch (Exception e) {
                 e.printStackTrace();
