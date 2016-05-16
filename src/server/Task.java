@@ -1,5 +1,6 @@
 package server;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -119,8 +120,8 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
 
 
     private int physicalActivityLevel;
-    private int[] physicalActivitySamples;
-    private int[] bloodSugarDropSamples;
+    private List<Integer> physicalActivitySamples;
+    private List<Integer> bloodSugarDropSamples;
 
     InsulinCalc calculator;
     private int result;
@@ -133,10 +134,22 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
 
-        setResult(calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),getPhysicalActivitySamples(),getBloodSugarDropSamples()));
+        int[] activitySamples = new int[0];
+        intListToArray(getPhysicalActivitySamples(),activitySamples);
+
+        int[] bloodSamples = new int[0];
+        intListToArray(getBloodSugarDropSamples(),bloodSamples);
+
+        setResult(calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),activitySamples,bloodSamples));
         return 0;
     }
 
+    public void intListToArray(List<Integer> input,int[] output){
+
+        for (int i=0;i< input.size();i++){
+            output[i] = input.get(i);
+        }
+    }
 
     public int getResult() {
         return result;
@@ -154,19 +167,123 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
         this.physicalActivityLevel = physicalActivityLevel;
     }
 
-    public int[] getPhysicalActivitySamples() {
+    public List<Integer> getPhysicalActivitySamples() {
         return physicalActivitySamples;
     }
 
-    public void setPhysicalActivitySamples(int[] physicalActivitySamples) {
+    public void setPhysicalActivitySamples(List<Integer> physicalActivitySamples) {
         this.physicalActivitySamples = physicalActivitySamples;
     }
 
-    public int[] getBloodSugarDropSamples() {
+    public List<Integer> getBloodSugarDropSamples() {
         return bloodSugarDropSamples;
     }
 
-    public void setBloodSugarDropSamples(int[] bloodSugarDropSamples) {
+    public void setBloodSugarDropSamples(List<Integer> bloodSugarDropSamples) {
         this.bloodSugarDropSamples = bloodSugarDropSamples;
     }
+}
+
+class TaskURL1 implements Callable<Integer> {
+
+    public String task;
+    private int result;
+
+    url1.InsulinDoseCalculatorService servico1;
+    url1.InsulinDoseCalculator interface_1;
+
+
+
+    public TaskURL1(){
+        servico1 = new url1.InsulinDoseCalculatorService();
+        interface_1 = servico1.getInsulinDoseCalculatorPort();
+    }
+    @Override
+    public Integer call() throws Exception {
+       switch (task){
+           case "mealtimeInsulinDose":
+               TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
+               setResult(interface_1.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity()));
+            break;
+
+           case "backgroundInsulinDose":
+               TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
+               setResult(interface_1.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight()));
+               break;
+
+           case "personalSensitivityToInsulin":
+               TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
+               setResult(interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples()));
+       }
+        return 0;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+
+}
+
+class TaskURL2 implements Callable<Integer> {
+
+    public String task;
+    private int result;
+
+    url1.InsulinDoseCalculatorService servico2;
+    url1.InsulinDoseCalculator interface_2;
+
+    public TaskURL2(){
+        servico2 = new url1.InsulinDoseCalculatorService();
+        interface_2 = servico2.getInsulinDoseCalculatorPort();
+    }
+    @Override
+    public Integer call() throws Exception {
+        switch (task){
+            case "mealtimeInsulinDose":
+                TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
+                setResult(interface_2.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity()));
+                break;
+
+            case "backgroundInsulinDose":
+                TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
+                setResult(interface_2.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight()));
+                break;
+
+            case "personalSensitivityToInsulin":
+                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
+                setResult(interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples()));
+        }
+        return 0;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+
 }
