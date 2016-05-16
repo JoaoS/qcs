@@ -48,12 +48,12 @@ public class Controller {
         url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
         */
 
-    /**
-    *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
-    *
-    *
-    *
-    */
+        /**
+         *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
+         *
+         *
+         *
+         */
         switch (getServiceURI()){
 
             /*Meal Time Insulin Dose*/
@@ -145,8 +145,14 @@ public class Controller {
                 TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1();
                 TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2();
 
+<<<<<<< HEAD
+                //TEST
+                url2.InsulinDoseCalculator_Service servico2 = new url2.InsulinDoseCalculator_Service();
+                url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
+=======
                 intArrayToIntList(getPhysicalActivitySamples(),activitySamples);
                 intArrayToIntList(getBloodSugarDropSamples(),bloodSamples);
+>>>>>>> 09168fabdc712549abfb3a8d123943c8ae56a94f
 
                 /*int[] level1=this.getPhysicalActivitySamples();
                 System.out.println("list"+level1.toString());
