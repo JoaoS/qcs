@@ -30,12 +30,12 @@ public class Controller {
         Future<Integer> future;
 
 
-    /**
-    *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
-    *
-    *
-    *
-    */
+        /**
+         *The voter has to be implemented here, maybe use the 3 urls and then implement the voter
+         *
+         *
+         *
+         */
         switch (getServiceURI()){
 
             /*Meal Time Insulin Dose*/
@@ -122,7 +122,7 @@ public class Controller {
 
                 //TEST
                 url2.InsulinDoseCalculator_Service servico2 = new url2.InsulinDoseCalculator_Service();
-               url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
+                url2.InsulinDoseCalculator interface_2 = servico2.getInsulinDoseCalculatorPort();
 
                 List<Integer> activitySamples= new ArrayList<>();
                 int[] level1=this.getPhysicalActivitySamples();
@@ -161,6 +161,64 @@ public class Controller {
 
         }
 
+
+    }
+
+    /**
+     *
+     * @param value1
+     * @param value2
+     * @param value3
+     * @return
+     */
+    public boolean voterMechanism(int value1, int value2, int value3){
+
+
+        //todo valerá a a pena devolver dados não binários?
+
+
+ 	    //all timeouts
+        if (value1==-1 && value2==-1 && value3==-1) {
+                  //
+            System.out.println("All timeouts");
+            return false;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+    /**
+     * Returns true if the value is equal or has a 1 point diference
+     *
+     * @param value1 value of 1st voter
+     * @param value2 value of 2nd voter
+     *
+     *
+     *
+     */
+    public boolean isEqual(int value1, int value2){
+
+        if (value1 == value2)
+            return true;
+
+        if(value1-1==value2 || value1+1==value2)
+            return  true;
+
+        else
+            return false;
 
     }
 
