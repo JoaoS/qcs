@@ -1,10 +1,8 @@
 package server;
 
-import javafx.concurrent.Task;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
-
 
 /**
  * Created by danielamaral on 10/05/16.
@@ -21,7 +19,7 @@ public class Controller {
     private int PhysicalActivityLevel;
     private int[] PhysicalActivitySamples;
     private int[] BloodSugarDropSamples;
-    public List<Future<Integer>> futureList = new ArrayList<Future<Integer>>();
+    public List<Future<Integer>> futureList = new ArrayList<>();
     private ArrayList<Integer> output = new ArrayList<Integer>();
     private int nPools = 3;
 
@@ -34,15 +32,7 @@ public class Controller {
     }
 
     public void caller() throws Exception {
-        /*ExecutorService executor = Executors.newSingleThreadExecutor();
-        ExecutorService executor1 = Executors.newSingleThreadExecutor();
-        ExecutorService executor2 = Executors.newSingleThreadExecutor();
 
-
-
-        Future<Integer> future1;
-        Future<Integer> future2;
-        */
 
         Future<Integer> result;
 
@@ -52,166 +42,132 @@ public class Controller {
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
 
-
         switch (getServiceURI()) {
-
-            /*Meal Time Insulin Dose
+            /*Meal Time Insulin Dose*/
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
-                TaskURL1 taskMealtimeInsulinDoseURL1 = new TaskURL1();
-                TaskURL2 taskMealtimeInsulinDoseURL2 = new TaskURL2();
 
                 taskMealtimeInsulinDose.setTaskCarbohydrateAmount(this.getCarbohydrateAmount());
                 taskMealtimeInsulinDose.setTaskCarbohydrateToInsulinRatio(this.getCarbohydrateToInsulinRatio());
                 taskMealtimeInsulinDose.setTaskPreMealBloodSugar(this.getPreMealBloodSugar());
-                taskMealtimeInsulinDose.setTaskTargetBloodSugar(this.getTargetBloodSugar());
                 taskMealtimeInsulinDose.setTaskPersonalSensitivity(this.getPersonalSensitivity());
 
-                future = executor.submit(taskMealtimeInsulinDose);
-                future1 = executor1.submit(taskMealtimeInsulinDoseURL1);
-                future2 = executor2.submit(taskMealtimeInsulinDoseURL2);
+                TaskURL1 taskMealTimeInsulinDoseURL1 = new TaskURL1(getServiceURI(),taskMealtimeInsulinDose,null,null);
+                TaskURL2 taskMealTimeInsulinDoseURL2  = new TaskURL2(getServiceURI(),taskMealtimeInsulinDose,null,null);
 
-                try {
-                    System.out.println("Started..");
-                    System.out.println(future.get(4,TimeUnit.SECONDS));
-                    System.out.println(future1.get(4, TimeUnit.SECONDS));
-                    System.out.println(future2.get(4, TimeUnit.SECONDS));
-
-                    result.add(taskMealtimeInsulinDose.getResult());
-                    result.add(taskMealtimeInsulinDoseURL1.getResult());
-                    result.add((taskMealtimeInsulinDoseURL2.getResult()));
-
-                    System.out.println("Finished!");
-                } catch (TimeoutException e) {
-                    future.cancel(true);
-                    future1.cancel(true);
-                    future2.cancel(true);
-                    System.out.println("Timeout Exception!");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                executor.shutdownNow();
-                executor1.shutdown();
-                executor2.shutdown();
-                break;
-
-            Backgroung Insulin Dose
-            case "backgroundInsulinDose":
-                TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-                TaskURL1 taskBackgroundInsulinDoseURL1 = new TaskURL1();
-                TaskURL2 taskBackgroundInsulinDoseURL2 = new TaskURL2();
-
-                taskBackgroundInsulinDose.setBodyWeight(this.getBodyWeight());
-
-                future = executor.submit(taskBackgroundInsulinDose);
-                future1 = executor1.submit(taskBackgroundInsulinDoseURL1);
-                future2 = executor2.submit(taskBackgroundInsulinDoseURL2);
-
-                try {
-                    System.out.println("Started..");
-
-                    future.get(4, TimeUnit.SECONDS);
-                    future1.get(4, TimeUnit.SECONDS);
-                    future2.get(4, TimeUnit.SECONDS);
-
-                    result.add(taskBackgroundInsulinDose.getResult());
-                    result.add(taskBackgroundInsulinDoseURL1.getResult());
-                    result.add(taskBackgroundInsulinDoseURL2.getResult());
-
-                    System.out.println("Finished!");
-                } catch (TimeoutException e) {
-                    future.cancel(true);
-                    future1.cancel(true);
-                    future2.cancel(true);
-                    System.out.println("Timeout Exception!");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-                executor.shutdownNow();
-                executor1.shutdown();
-                executor2.shutdown();
-                break;
-*/
-            /*Personal Sensivity To Insulin*/
-            case "personalSensitivityToInsulin":
-
-                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-                TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1();
-                TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2();
-
-                intArrayToIntList(getPhysicalActivitySamples(), activitySamples);
-                intArrayToIntList(getBloodSugarDropSamples(), bloodSamples);
-
-                taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
-                taskPersonalSensivityToInsulin.setPhysicalActivitySamples(activitySamples);
-                taskPersonalSensivityToInsulin.setBloodSugarDropSamples(bloodSamples);
-
-                List<Callable<Integer>> pool = new ArrayList<Callable<Integer>>();
-                pool.add(taskPersonalSensivityToInsulinURL1);
-                pool.add(taskPersonalSensivityToInsulinURL2);
-                pool.add(taskPersonalSensivityToInsulin);
+                List<Callable<Integer>> pool = new ArrayList<>();
+                pool.add(taskMealtimeInsulinDose);
+                pool.add(taskMealTimeInsulinDoseURL1);
+                pool.add(taskMealTimeInsulinDoseURL2);
 
                 futureList = executor.invokeAll(pool, 4, TimeUnit.SECONDS);
 
                 for (Future<Integer> future : futureList) {
                     try {
-                        //print the return value of Future, notice the output delay in console
-                        // because Future.get() waits for task to get completed
+
                         if (!future.isCancelled())
                             output.add(future.get());
 
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
-                        System.out.println("Done :)");
+                        System.out.println("Interrupted Exception");
                         //Thread.currentThread().interrupt();
                     } catch (ExecutionException e) {
                         //e.printStackTrace();
-                        System.out.println("Done :)");
+                        System.out.println("Execution Exception");
                         //Thread.currentThread().interrupt();
                     }
                 }
 
-
-                executor.shutdown();
-        }
-
-/*
-                try {
-                    System.out.println("Started..");
-
-                    future.get(4, TimeUnit.SECONDS);
-                    future1.get(4, TimeUnit.SECONDS);
-                    future2.get(4, TimeUnit.SECONDS);
-
-                    result.add(taskPersonalSensivityToInsulin.getResult());
-                    result.add(taskPersonalSensivityToInsulinURL1.getResult());
-                    result.add(taskPersonalSensivityToInsulinURL2.getResult());
-
-                    System.out.println("Finished!");
-                } catch (TimeoutException e) {
-                    future.cancel(true);
-                    future1.cancel(true);
-                    future2.cancel(true);
-                    System.out.println("Timeout Exception!");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                for(int i=0;i<output.size();i++){
+                    System.out.println("RESULT "+i+":"+output.get(i));
                 }
 
-                executor.shutdownNow();
+                executor.shutdown();
                 break;
-*/
+            /*Backgroung Insulin Dose*/
+            case "backgroundInsulinDose":
+
+                TaskBackgroundInsulinDose taskBackgroundInsulinDose= new TaskBackgroundInsulinDose();
+                taskBackgroundInsulinDose.setBodyWeight(this.getBodyWeight());
+
+                TaskURL1 taskBackgroungInsulinDoseURL1 = new TaskURL1(getServiceURI(),null,taskBackgroundInsulinDose,null);
+                TaskURL2 taskBackgroungInsulinDoseURL2 = new TaskURL2(getServiceURI(),null,taskBackgroundInsulinDose,null);
+
+                pool = new ArrayList<>();
+                pool.add(taskBackgroundInsulinDose);
+                pool.add(taskBackgroungInsulinDoseURL1);
+                pool.add(taskBackgroungInsulinDoseURL2);
+
+                futureList = executor.invokeAll(pool, 4, TimeUnit.SECONDS);
+
+                for (Future<Integer> future : futureList) {
+                    try {
+
+                        if (!future.isCancelled())
+                            output.add(future.get());
+
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                        System.out.println("Interrupted Exception");
+                        //Thread.currentThread().interrupt();
+                    } catch (ExecutionException e) {
+                        //e.printStackTrace();
+                        System.out.println("Execution Exception");
+                        //Thread.currentThread().interrupt();
+                    }
+                }
+
+                for(int i=0;i<output.size();i++){
+                    System.out.println("RESULT "+i+":"+output.get(i));
+                }
+
+                executor.shutdown();
+                break;
+
+            /*Personal Sensivity To Insulin*/
+            case "personalSensitivityToInsulin":
+
+                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
+                taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
+                taskPersonalSensivityToInsulin.setPhysicalActivitySamples(this.getPhysicalActivitySamples());
+                taskPersonalSensivityToInsulin.setBloodSugarDropSamples(this.getBloodSugarDropSamples());
+
+                TaskURL1 taskPersonalSensivityToInsulinURL1 = new TaskURL1(getServiceURI(),null,null,taskPersonalSensivityToInsulin);
+                TaskURL2 taskPersonalSensivityToInsulinURL2 = new TaskURL2(getServiceURI(),null,null,taskPersonalSensivityToInsulin);
+
+                pool = new ArrayList<>();
+                pool.add(taskPersonalSensivityToInsulin);
+                pool.add(taskPersonalSensivityToInsulinURL1);
+                pool.add(taskPersonalSensivityToInsulinURL2);
+
+                futureList = executor.invokeAll(pool, 4, TimeUnit.SECONDS);
+
+                for (Future<Integer> future : futureList) {
+                    try {
+
+                        if (!future.isCancelled())
+                            output.add(future.get());
+
+                    } catch (InterruptedException e) {
+                        //e.printStackTrace();
+                        System.out.println("Interrupted Exception");
+                        //Thread.currentThread().interrupt();
+                    } catch (ExecutionException e) {
+                        //e.printStackTrace();
+                        System.out.println("Execution Exception");
+                        //Thread.currentThread().interrupt();
+                    }
+                }
+
+                for(int i=0;i<output.size();i++){
+                    System.out.println("RESULT "+i+":"+output.get(i));
+                }
+                executor.shutdown();
+                break;
         }
 
-
-
+    }
 
     /**
      * @param values arraylist with values, if a certain service times-out the corresponding index shall bear the -1 value
@@ -322,14 +278,6 @@ public class Controller {
     public void setServiceURI(String serviceURI) {
         this.serviceURI = serviceURI;
     }
-
-    public void intArrayToIntList(int[] input,List<Integer> output){
-
-        for (int i=0;i< input.length;i++){
-            output.add(input[i]);
-        }
-    }
-
 
     public ArrayList<Integer> getOutput() {
         return output;

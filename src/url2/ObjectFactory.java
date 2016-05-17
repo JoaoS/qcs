@@ -28,14 +28,42 @@ public class ObjectFactory {
     private final static QName _BackgroundInsulinDose_QNAME = new QName("http://server/", "backgroundInsulinDose");
     private final static QName _BackgroundInsulinDoseResponse_QNAME = new QName("http://server/", "backgroundInsulinDoseResponse");
     private final static QName _MealtimeInsulinDose_QNAME = new QName("http://server/", "mealtimeInsulinDose");
+    private final static QName _Hello_QNAME = new QName("http://server/", "hello");
     private final static QName _MealtimeInsulinDoseResponse_QNAME = new QName("http://server/", "mealtimeInsulinDoseResponse");
+    private final static QName _HelloResponse_QNAME = new QName("http://server/", "helloResponse");
     private final static QName _PersonalSensitivityToInsulin_QNAME = new QName("http://server/", "personalSensitivityToInsulin");
+    private final static QName _InsulinCalculator_QNAME = new QName("http://server/", "InsulinCalculator");
+    private final static QName _InsulinCalculatorResponse_QNAME = new QName("http://server/", "InsulinCalculatorResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: url2
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link InsulinCalculatorResponse }
+     * 
+     */
+    public InsulinCalculatorResponse createInsulinCalculatorResponse() {
+        return new InsulinCalculatorResponse();
+    }
+
+    /**
+     * Create an instance of {@link InsulinCalculator_Type }
+     * 
+     */
+    public InsulinCalculator_Type createInsulinCalculator_Type() {
+        return new InsulinCalculator_Type();
+    }
+
+    /**
+     * Create an instance of {@link HelloResponse }
+     * 
+     */
+    public HelloResponse createHelloResponse() {
+        return new HelloResponse();
     }
 
     /**
@@ -60,6 +88,14 @@ public class ObjectFactory {
      */
     public MealtimeInsulinDose createMealtimeInsulinDose() {
         return new MealtimeInsulinDose();
+    }
+
+    /**
+     * Create an instance of {@link Hello }
+     * 
+     */
+    public Hello createHello() {
+        return new Hello();
     }
 
     /**
@@ -123,6 +159,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Hello }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "hello")
+    public JAXBElement<Hello> createHello(Hello value) {
+        return new JAXBElement<Hello>(_Hello_QNAME, Hello.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link MealtimeInsulinDoseResponse }{@code >}}
      * 
      */
@@ -132,12 +177,39 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HelloResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "helloResponse")
+    public JAXBElement<HelloResponse> createHelloResponse(HelloResponse value) {
+        return new JAXBElement<HelloResponse>(_HelloResponse_QNAME, HelloResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link PersonalSensitivityToInsulin }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://server/", name = "personalSensitivityToInsulin")
     public JAXBElement<PersonalSensitivityToInsulin> createPersonalSensitivityToInsulin(PersonalSensitivityToInsulin value) {
         return new JAXBElement<PersonalSensitivityToInsulin>(_PersonalSensitivityToInsulin_QNAME, PersonalSensitivityToInsulin.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsulinCalculator_Type }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "InsulinCalculator")
+    public JAXBElement<InsulinCalculator_Type> createInsulinCalculator(InsulinCalculator_Type value) {
+        return new JAXBElement<InsulinCalculator_Type>(_InsulinCalculator_QNAME, InsulinCalculator_Type.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link InsulinCalculatorResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server/", name = "InsulinCalculatorResponse")
+    public JAXBElement<InsulinCalculatorResponse> createInsulinCalculatorResponse(InsulinCalculatorResponse value) {
+        return new JAXBElement<InsulinCalculatorResponse>(_InsulinCalculatorResponse_QNAME, InsulinCalculatorResponse.class, null, value);
     }
 
 }

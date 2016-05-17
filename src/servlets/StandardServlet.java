@@ -1,6 +1,6 @@
-package servlets;
+package src.servlets;
 
-import server.Controller;
+import src.server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * Created by Christophe on 10/05/2016.

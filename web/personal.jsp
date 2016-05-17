@@ -25,7 +25,7 @@
 
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Today's physical activity level:</h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="todayActivity" type="number" name="todayActivity" placeholder="0 - 10" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" id="todayActivity" type="number" name="todayActivity" placeholder="0 - 10" min="0" max="10" required="required">
                         </div>
 
                         <div style="width: 100%">
@@ -33,8 +33,8 @@
                             <input style="float:right; width:5%; height:50px;" type="button" name="action" value="+" class="float" onClick="addInputActivity('dynamicInputActivity');">
                             <div style="width:100%">
                                 <div id="dynamicInputActivity">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10" min="0" max="10" required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesActivity" type="number" name="samplesActivity[]" placeholder="0 - 10" min="0" max="10" required="required">
                                 </div>
                             </div>
                         </div>
@@ -44,8 +44,8 @@
                             <input style="float:right; width:5%; height:50px" type="button" name="action" value="+" class="float" onClick="addInputBlood('dynamicInputBlood');">
                             <div style="width:100%">
                                 <div id="dynamicInputBlood">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
-                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl"  required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl" min="15" max="100" required="required">
+                                    <br><input style="float:left; width:19%; height:35px; font-size:20px; margin:0.50%" class="samplesBlood" type="number" name="samplesBlood[]" placeholder="15mg/dl - 100mg/dl" min="15" max="100" required="required">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                 }
                 else {
                     var newdiv = document.createElement('div');
-                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesActivity' type='number' name='samplesActivity[]' placeholder='0 - 10'  required='required'>";
+                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesActivity' type='number' name='samplesActivity[]' placeholder='0 - 10' min='0' max='10' required='required'>";
                     document.getElementById(divName).appendChild(newdiv);
                     activityCounter++;
                 }
@@ -105,7 +105,7 @@
                 }
                 else {
                     var newdiv = document.createElement('div');
-                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesBlood' type='number' name='samplesBlood[]' placeholder='15mg/dl - 100mg/dl'  required='required'>";
+                    newdiv.innerHTML = "<input style='float:left; width:19%; height:35px; font-size:20px; margin:0.50%' class='samplesBlood' type='number' name='samplesBlood[]' placeholder='15mg/dl - 100mg/dl' min='15' max='100' required='required'>";
                     document.getElementById(divName).appendChild(newdiv);
                     bloodCounter++;
                 }
