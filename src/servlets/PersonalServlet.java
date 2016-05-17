@@ -1,6 +1,6 @@
-package servlets;
+package src.servlets;
 
-import server.Controller;
+import src.server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,10 +48,10 @@ public class PersonalServlet extends HttpServlet {
 
                 ArrayList<Integer> units = controller.getOutput();
 
-                session.setAttribute("totalInsulin:", units.get(0) + "U");
+                session.setAttribute("totalInsulin:", units.get(0) + "mg/dl");
                 session.removeAttribute("detailsInfo");
-                System.out.println(units.get(0));
-               session.setAttribute("TextValue5",units.get(0));
+
+                session.setAttribute("TextValue5",units);
             } catch (Exception e) {
                 e.printStackTrace();
             }

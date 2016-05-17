@@ -23,7 +23,7 @@
                     <form action="./BackgroundServlet" method="POST">
                         <div style="width: 100%">
                             <h3 style="float:left; width:75%">Weight in kilograms: </h3>
-                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" id="mealCarbohydrates" name="mealCarbohydrates" placeholder="40kg - 130kg" required="required">
+                            <input style="float:left; width:25%; height:35px; font-size:20px; margin-top: 1%" type="number" id="mealCarbohydrates" name="mealCarbohydrates" placeholder="40kg - 130kg" min="40" max="130" required="required">
                         </div>
                         <button style="float:left; width:100%" type="submit" name="action" value="Calculation" class="float" onClick="enableButton()">Calculate Insulin Dose</button>
                     </form>
