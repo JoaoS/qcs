@@ -23,7 +23,7 @@ public class insulinCalcTest {
         */
 
         InsulinCalc s = new InsulinCalc();
-        System.out.println("Teste1="+s.mealtimeInsulinDose( 60, 12, 200, 100, 25));
+        System.out.println("Teste1="+s.mealtimeInsulinDose( 60, 12, 200, 100, 50));
 
         System.out.println("Teste2="+s.mealtimeInsulinDose(  95, 10, 100, 120, 50));
 

@@ -1,4 +1,4 @@
-package src.servlets;
+package servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +21,8 @@ public class CancelServlet extends HttpServlet {
             if(session.getAttribute("comeFromStandard").equals("true")){
                 session.setAttribute("comeFromStandard","");
                 session.setAttribute("totalInsulin", "");
+                session.setAttribute("detailsInfo", "");
+
                 request.getRequestDispatcher("standard.jsp").forward(request, response);
             }
             else {

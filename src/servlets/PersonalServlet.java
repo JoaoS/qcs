@@ -1,6 +1,6 @@
-package src.servlets;
+package servlets;
 
-import src.server.Controller;
+import server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +21,7 @@ public class PersonalServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        controller=Controller.getInstance();
         if(request.getParameter("action").equals("Calculation")){
 
             int physicalActivityLevel = Integer.parseInt(request.getParameter("todayActivity"));
@@ -38,17 +39,17 @@ public class PersonalServlet extends HttpServlet {
                 bloodSugarDropSamples[i]= Integer.parseInt(bloodSamples[i]);
                 System.out.println(bloodSugarDropSamples[i]);
             }
-
-            controller = new Controller("personalSensitivityToInsulin");
+            controller=Controller.getInstance();
+            controller.setServiceURI("personalSensitivityToInsulin");
             controller.setPhysicalActivityLevel(physicalActivityLevel);
             controller.setPhysicalActivitySamples(physicalActivitySamples);
             controller.setBloodSugarDropSamples(bloodSugarDropSamples);
             try {
                 controller.caller();
 
-                ArrayList<Integer> units = controller.getOutput();
+                int units = controller.getVoterValue();
 
-                session.setAttribute("totalInsulin:", units.get(0) + "mg/dl");
+                session.setAttribute("totalInsulin", units + "mg/dl");
                 session.removeAttribute("detailsInfo");
 
                 session.setAttribute("TextValue5",units);

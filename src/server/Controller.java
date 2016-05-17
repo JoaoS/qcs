@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -8,6 +9,8 @@ import java.util.concurrent.*;
  * Created by danielamaral on 10/05/16.
  */
 public class Controller {
+
+    private static Controller ourInstance=new Controller();
 
     private String serviceURI;
     private int CarbohydrateAmount;
@@ -22,13 +25,16 @@ public class Controller {
     public List<Future<Integer>> futureList = new ArrayList<>();
     private ArrayList<Integer> output = new ArrayList<Integer>();
     private int nPools = 3;
+    private int voterValue=0;
 
-    public Controller(String incomingServiceURI){
-        setServiceURI(incomingServiceURI);
+
+    public static Controller getInstance() {
+        return ourInstance;
     }
 
     //for testing
     public Controller() {
+
     }
 
     public void caller() throws Exception {
@@ -45,12 +51,17 @@ public class Controller {
         switch (getServiceURI()) {
             /*Meal Time Insulin Dose*/
             case "mealtimeInsulinDose":
+                output.clear();
+
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
 
                 taskMealtimeInsulinDose.setTaskCarbohydrateAmount(this.getCarbohydrateAmount());
                 taskMealtimeInsulinDose.setTaskCarbohydrateToInsulinRatio(this.getCarbohydrateToInsulinRatio());
                 taskMealtimeInsulinDose.setTaskPreMealBloodSugar(this.getPreMealBloodSugar());
                 taskMealtimeInsulinDose.setTaskPersonalSensitivity(this.getPersonalSensitivity());
+                taskMealtimeInsulinDose.setTaskTargetBloodSugar(this.getTargetBloodSugar());
+
+
 
                 TaskURL1 taskMealTimeInsulinDoseURL1 = new TaskURL1(getServiceURI(),taskMealtimeInsulinDose,null,null);
                 TaskURL2 taskMealTimeInsulinDoseURL2  = new TaskURL2(getServiceURI(),taskMealtimeInsulinDose,null,null);
@@ -87,6 +98,7 @@ public class Controller {
                 break;
             /*Backgroung Insulin Dose*/
             case "backgroundInsulinDose":
+                output.clear();
 
                 TaskBackgroundInsulinDose taskBackgroundInsulinDose= new TaskBackgroundInsulinDose();
                 taskBackgroundInsulinDose.setBodyWeight(this.getBodyWeight());
@@ -128,6 +140,7 @@ public class Controller {
             /*Personal Sensivity To Insulin*/
             case "personalSensitivityToInsulin":
 
+                output.clear();
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
                 taskPersonalSensivityToInsulin.setPhysicalActivityLevel(this.getPhysicalActivityLevel());
                 taskPersonalSensivityToInsulin.setPhysicalActivitySamples(this.getPhysicalActivitySamples());
@@ -152,20 +165,27 @@ public class Controller {
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
                         System.out.println("Interrupted Exception");
+                        output.add(-1);
                         //Thread.currentThread().interrupt();
                     } catch (ExecutionException e) {
                         //e.printStackTrace();
                         System.out.println("Execution Exception");
+                        output.add(-1);
                         //Thread.currentThread().interrupt();
                     }
                 }
+
 
                 for(int i=0;i<output.size();i++){
                     System.out.println("RESULT "+i+":"+output.get(i));
                 }
                 executor.shutdown();
+
+
                 break;
         }
+
+        setVoterValue(voterMechanism(output));
 
     }
 
@@ -286,5 +306,15 @@ public class Controller {
     public void setOutput(ArrayList<Integer> output) {
         this.output = output;
     }
+
+    public int getVoterValue() {
+        return voterValue;
+    }
+
+    public void setVoterValue(int voterValue) {
+        this.voterValue = voterValue;
+    }
+
+
 }
 

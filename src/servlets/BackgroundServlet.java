@@ -1,6 +1,6 @@
-package src.servlets;
+package servlets;
 
-import src.server.Controller;
+import server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,18 +24,14 @@ public class BackgroundServlet extends HttpServlet {
         if(request.getParameter("action").equals("Calculation")){
             int bodyWeight = Integer.parseInt(request.getParameter("mealCarbohydrates"));
 
-            controller = new Controller("backgroundInsulinDose");
+            controller=Controller.getInstance();
+            controller.setServiceURI("backgroundInsulinDose");
             controller.setBodyWeight(bodyWeight);
 
             try {
                 controller.caller();
 
-                ArrayList<Integer> units = controller.getOutput();
-
-
-                for(int i=0;i<units.size();i++) {
-                    System.out.println("service "+i+" "+units.get(i)+"\n");
-                }
+                int units = controller.getVoterValue();
 
                 session.setAttribute("totalInsulin",units+"U");
                 session.removeAttribute("detailsInfo");

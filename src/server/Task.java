@@ -246,8 +246,8 @@ class TaskURL2 implements Callable<Integer> {
     TaskMealtimeInsulinDose taskMTID;
     TaskBackgroundInsulinDose taskBID;
     TaskPersonalSensivityToInsulin taskPSTI;
-    url2.InsulinCalculator_Service service;
-    url2.InsulinCalculator interface_;
+    url2.InsulinDoseCalculatorService service;
+    url2.InsulinDoseCalculator interface_;
 
     int physicalActivityLevel;
     List<Integer> actSamples = new ArrayList<>();
@@ -258,8 +258,8 @@ class TaskURL2 implements Callable<Integer> {
         taskBID = taskBID_;
         taskPSTI = taskPSTI_;
         setTask(task_);
-        service = new url2.InsulinCalculator_Service();
-        interface_ = service.getInsulinCalculatorPort();
+        service = new url2.InsulinDoseCalculatorService();
+        interface_ = service.getInsulinDoseCalculatorPort();
     }
 
     @Override

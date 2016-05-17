@@ -1,6 +1,6 @@
-package src.servlets;
+package servlets;
 
-import src.server.Controller;
+import server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,8 +38,8 @@ public class StandardServlet extends HttpServlet {
             int targetBloodSugar = Integer.parseInt(request.getParameter("bloodTarget"));
             int personalSensitivity = Integer.parseInt(request.getParameter("sensitivity"));
 
-
-            controller = new Controller("mealtimeInsulinDose");
+            controller=Controller.getInstance();
+            controller.setServiceURI("mealtimeInsulinDose");
             controller.setCarbohydrateAmount(carbohydrateAmount);
             controller.setCarbohydrateToInsulinRatio(carbohydrateToInsulinRatio);
             controller.setPreMealBloodSugar(preMealBloodSugar);
@@ -49,12 +49,7 @@ public class StandardServlet extends HttpServlet {
             try {
                 controller.caller();
 
-                ArrayList<Integer> units = controller.getOutput();
-
-
-                for(int i=0;i<units.size();i++) {
-                    System.out.println("service "+i+" "+units.get(i)+"\n");
-                }
+                int units = controller.getVoterValue();
 
                 session.setAttribute("totalInsulin",units+"U");
                 session.removeAttribute("detailsInfo");

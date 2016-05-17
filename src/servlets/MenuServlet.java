@@ -1,4 +1,6 @@
-package src.servlets;
+package servlets;
+
+import server.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,9 @@ public class MenuServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.setAttribute("comeFromStandard","");
+
+        Controller n =Controller.getInstance();
+
         if(request.getParameter("action").equals("Standard")){
             session.setAttribute("TextValue1","");
             session.setAttribute("TextValue2","12");

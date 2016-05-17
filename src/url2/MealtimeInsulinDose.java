@@ -16,11 +16,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="carbohydrateAmount" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="carbohydrateToInsulinRatio" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="preMealBloodSugar" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="targetBloodSugar" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="personalSensitivity" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,98 +31,98 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "mealtimeInsulinDose", propOrder = {
-    "carbohydrateAmount",
-    "carbohydrateToInsulinRatio",
-    "preMealBloodSugar",
-    "targetBloodSugar",
-    "personalSensitivity"
+    "arg0",
+    "arg1",
+    "arg2",
+    "arg3",
+    "arg4"
 })
 public class MealtimeInsulinDose {
 
-    protected int carbohydrateAmount;
-    protected int carbohydrateToInsulinRatio;
-    protected int preMealBloodSugar;
-    protected int targetBloodSugar;
-    protected int personalSensitivity;
+    protected int arg0;
+    protected int arg1;
+    protected int arg2;
+    protected int arg3;
+    protected int arg4;
 
     /**
-     * Gets the value of the carbohydrateAmount property.
+     * Gets the value of the arg0 property.
      * 
      */
-    public int getCarbohydrateAmount() {
-        return carbohydrateAmount;
+    public int getArg0() {
+        return arg0;
     }
 
     /**
-     * Sets the value of the carbohydrateAmount property.
+     * Sets the value of the arg0 property.
      * 
      */
-    public void setCarbohydrateAmount(int value) {
-        this.carbohydrateAmount = value;
+    public void setArg0(int value) {
+        this.arg0 = value;
     }
 
     /**
-     * Gets the value of the carbohydrateToInsulinRatio property.
+     * Gets the value of the arg1 property.
      * 
      */
-    public int getCarbohydrateToInsulinRatio() {
-        return carbohydrateToInsulinRatio;
+    public int getArg1() {
+        return arg1;
     }
 
     /**
-     * Sets the value of the carbohydrateToInsulinRatio property.
+     * Sets the value of the arg1 property.
      * 
      */
-    public void setCarbohydrateToInsulinRatio(int value) {
-        this.carbohydrateToInsulinRatio = value;
+    public void setArg1(int value) {
+        this.arg1 = value;
     }
 
     /**
-     * Gets the value of the preMealBloodSugar property.
+     * Gets the value of the arg2 property.
      * 
      */
-    public int getPreMealBloodSugar() {
-        return preMealBloodSugar;
+    public int getArg2() {
+        return arg2;
     }
 
     /**
-     * Sets the value of the preMealBloodSugar property.
+     * Sets the value of the arg2 property.
      * 
      */
-    public void setPreMealBloodSugar(int value) {
-        this.preMealBloodSugar = value;
+    public void setArg2(int value) {
+        this.arg2 = value;
     }
 
     /**
-     * Gets the value of the targetBloodSugar property.
+     * Gets the value of the arg3 property.
      * 
      */
-    public int getTargetBloodSugar() {
-        return targetBloodSugar;
+    public int getArg3() {
+        return arg3;
     }
 
     /**
-     * Sets the value of the targetBloodSugar property.
+     * Sets the value of the arg3 property.
      * 
      */
-    public void setTargetBloodSugar(int value) {
-        this.targetBloodSugar = value;
+    public void setArg3(int value) {
+        this.arg3 = value;
     }
 
     /**
-     * Gets the value of the personalSensitivity property.
+     * Gets the value of the arg4 property.
      * 
      */
-    public int getPersonalSensitivity() {
-        return personalSensitivity;
+    public int getArg4() {
+        return arg4;
     }
 
     /**
-     * Sets the value of the personalSensitivity property.
+     * Sets the value of the arg4 property.
      * 
      */
-    public void setPersonalSensitivity(int value) {
-        this.personalSensitivity = value;
+    public void setArg4(int value) {
+        this.arg4 = value;
     }
 
 }
