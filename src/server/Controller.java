@@ -2,10 +2,7 @@ package server;
 
 import javafx.concurrent.Task;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.*;
 
 
@@ -30,6 +27,10 @@ public class Controller {
 
     public Controller(String incomingServiceURI){
         setServiceURI(incomingServiceURI);
+    }
+
+    //for testing
+    public Controller() {
     }
 
     public void caller() throws Exception {
@@ -213,66 +214,31 @@ public class Controller {
 
 
     /**
+     * @param values arraylist with values, if a certain service times-out the corresponding index shall bear the -1 value
+     * @return the value or -1 if it cannot reach a conclusion
      *
-     * @return
-     * timed out values have to bear the -1 value
      */
-    public boolean voterMechanism(ArrayList<Integer> values){
+    public int  voterMechanism(ArrayList<Integer> values){
 
+        //mediana
+        Collections.sort(values);
+        //correct the -1
+        int timeouts=Collections.frequency(values,-1);
 
-        //todo valerá a a pena devolver dados não binários?
-        int value1=values.get(0);
-        int value2=values.get(1);
-        int value3=values.get(2);
+        if (timeouts<=1){
 
+            //voter system
+            int leftDistance=values.get(1)-values.get(0);
+            int rightDistance=values.get(2)-values.get(1);
 
-        //all timeouts
-        if (value1==-1 && value2==-1 && value3==-1) {
-                  //
-            System.out.println("All timeouts");
-            return false;
+            if (leftDistance <= 1 || rightDistance <=1) {
+                return values.get(1);
+            }
 
         }
 
-        //only one value, two timeouts
-       /*
-            ::a1 > 0 && a2 <= 0 && a3 <= 0 ->	printf("Reject value 1\n");
-            ::a2 > 0 && a1 <= 0 && a3 <= 0 ->   printf("Reject value 2\n");
-            ::a3 > 0 && a1 <= 0 && a2 <= 0 ->	printf("Reject value 3\n");
-       */
-
-       // if (value1 > 0 && value2 ==-1 && value3==-1)
-
-
-
-
-
-
-
-    return true;
-
-    }
-
-
-    /**
-     * Returns true if the value is equal or has a 1 point diference
-     *
-     * @param value1 value of 1st voter
-     * @param value2 value of 2nd voter
-     *
-     *
-     *
-     */
-    public boolean isEqual(int value1, int value2){
-
-        if (value1 == value2)
-            return true;
-
-        if(value1-1==value2 || value1+1==value2)
-            return  true;
-
-        else
-            return false;
+        //else
+        return -1;
 
     }
 

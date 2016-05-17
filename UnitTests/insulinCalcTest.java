@@ -1,5 +1,8 @@
 import org.junit.Test;
 import server.InsulinCalc;
+import server.Controller;
+
+import java.util.ArrayList;
 
 /**
  * Created by joaosubtil on 04/05/16.
@@ -64,6 +67,22 @@ public class insulinCalcTest {
         int array7 [] ={1,6,8,9};
         int array8 [] ={32,61,91,88};
         System.out.println("Teste4="+s.personalSensitivityToInsulin(4,array7,array8)); //todo, falha este teste
+
+    }
+
+
+    @Test
+    public void testController() throws Exception {
+
+        Controller n = new Controller();
+        //3 value arraylist
+
+        ArrayList<Integer> s=new ArrayList<>();
+        s.add(2);
+        s.add(1);
+        s.add(3);
+        System.out.println("result= "+n.voterMechanism(s));
+
 
     }
 }

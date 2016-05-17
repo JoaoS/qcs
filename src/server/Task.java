@@ -187,7 +187,7 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
 class TaskURL1 implements Callable<Integer> {
 
     public String task;
-    private int result;
+    public int result;
 
     url1.InsulinDoseCalculatorService servico1;
     url1.InsulinDoseCalculator interface_1;
@@ -213,7 +213,9 @@ class TaskURL1 implements Callable<Integer> {
 
            case "personalSensitivityToInsulin":
                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-               return interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+               result = interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+               System.out.println(result);
+               return result;
 
        }
         return 0;
@@ -241,7 +243,7 @@ class TaskURL1 implements Callable<Integer> {
 class TaskURL2 implements Callable<Integer> {
 
     public String task;
-    private int result;
+    public int result;
 
     url1.InsulinDoseCalculatorService servico2;
     url1.InsulinDoseCalculator interface_2;
@@ -265,7 +267,9 @@ class TaskURL2 implements Callable<Integer> {
 
             case "personalSensitivityToInsulin":
                 TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-                return interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+                result = interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+                System.out.println(result);
+                return result;
         }
         return 0;
     }
