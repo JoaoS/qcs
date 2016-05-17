@@ -3,7 +3,6 @@ package servlets;
 import server.Controller;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * Created by Christophe on 10/05/2016.
@@ -53,8 +50,8 @@ public class PersonalServlet extends HttpServlet {
 
                 session.setAttribute("totalInsulin:", units.get(0) + "U");
                 session.removeAttribute("detailsInfo");
-
-               // session.setAttribute("TextValue5",units);
+                System.out.println(units.get(0));
+               session.setAttribute("TextValue5",units.get(0));
             } catch (Exception e) {
                 e.printStackTrace();
             }

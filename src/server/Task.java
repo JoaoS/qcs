@@ -1,7 +1,9 @@
 package server;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
 
 /**
  * Created by danielamaral on 10/05/16.
@@ -18,12 +20,11 @@ class TaskMealtimeInsulinDose implements Callable<Integer> {
     private int result;
 
     public TaskMealtimeInsulinDose (){
-
         calculator = new InsulinCalc();
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         return calculator.mealtimeInsulinDose(getTaskCarbohydrateAmount(), getTaskCarbohydrateToInsulinRatio(), getTaskPreMealBloodSugar(), getTaskTargetBloodSugar(), getTaskPersonalSensitivity());
 
     }
@@ -93,7 +94,7 @@ class TaskBackgroundInsulinDose implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         return calculator.backgroundInsulinDose(getBodyWeight());
 
     }
@@ -120,8 +121,8 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
 
 
     private int physicalActivityLevel;
-    private List<Integer> physicalActivitySamples;
-    private List<Integer> bloodSugarDropSamples;
+    private int[] physicalActivitySamples;
+    private int[] bloodSugarDropSamples;
 
     InsulinCalc calculator;
     private int result;
@@ -132,15 +133,10 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
 
-        int[] activitySamples = new int[2];
-        intListToArray(getPhysicalActivitySamples(),activitySamples);
-
-        int[] bloodSamples = new int[2];
-        intListToArray(getBloodSugarDropSamples(),bloodSamples);
-
-        return calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),activitySamples,bloodSamples);
+        result = calculator.personalSensitivityToInsulin(getPhysicalActivityLevel(),physicalActivitySamples,bloodSugarDropSamples);
+        return result;
 
     }
 
@@ -167,19 +163,19 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
         this.physicalActivityLevel = physicalActivityLevel;
     }
 
-    public List<Integer> getPhysicalActivitySamples() {
+    public int[] getPhysicalActivitySamples() {
         return physicalActivitySamples;
     }
 
-    public void setPhysicalActivitySamples(List<Integer> physicalActivitySamples) {
+    public void setPhysicalActivitySamples(int[] physicalActivitySamples) {
         this.physicalActivitySamples = physicalActivitySamples;
     }
 
-    public List<Integer> getBloodSugarDropSamples() {
+    public int[] getBloodSugarDropSamples() {
         return bloodSugarDropSamples;
     }
 
-    public void setBloodSugarDropSamples(List<Integer> bloodSugarDropSamples) {
+    public void setBloodSugarDropSamples(int[] bloodSugarDropSamples) {
         this.bloodSugarDropSamples = bloodSugarDropSamples;
     }
 }
@@ -187,36 +183,47 @@ class TaskPersonalSensivityToInsulin implements Callable<Integer> {
 class TaskURL1 implements Callable<Integer> {
 
     public String task;
-    private int result;
+    public int result = 0;
+    TaskMealtimeInsulinDose taskMTID;
+    TaskBackgroundInsulinDose taskBID;
+    TaskPersonalSensivityToInsulin taskPSTI;
+    url1.InsulinDoseCalculatorService service;
+    url1.InsulinDoseCalculator interface_;
 
-    url1.InsulinDoseCalculatorService servico1;
-    url1.InsulinDoseCalculator interface_1;
+    int physicalActivityLevel;
+    List<Integer> actSamples = new ArrayList<>();
+    List<Integer> blSamples = new ArrayList<>();
 
-
-
-    public TaskURL1(){
-        servico1 = new url1.InsulinDoseCalculatorService();
-        interface_1 = servico1.getInsulinDoseCalculatorPort();
+    public TaskURL1(String task_,TaskMealtimeInsulinDose taskMTID_,TaskBackgroundInsulinDose taskBID_,TaskPersonalSensivityToInsulin taskPSTI_){
+        taskMTID = taskMTID_;
+        taskBID = taskBID_;
+        taskPSTI = taskPSTI_;
+        setTask(task_);
+        service = new url1.InsulinDoseCalculatorService();
+        interface_ = service.getInsulinDoseCalculatorPort();
     }
+
     @Override
     public Integer call() throws Exception {
-       switch (task){
+       switch (this.getTask()){
            case "mealtimeInsulinDose":
-               TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
-               return  interface_1.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity());
-
+               result = interface_.mealtimeInsulinDose(taskMTID.getTaskCarbohydrateAmount(), taskMTID.getTaskCarbohydrateToInsulinRatio(), taskMTID.getTaskPreMealBloodSugar(), taskMTID.getTaskTargetBloodSugar(), taskMTID.getTaskPersonalSensitivity());
+               break;
 
            case "backgroundInsulinDose":
-               TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-               return interface_1.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight());
-
+               result = interface_.backgroundInsulinDose(taskBID.getBodyWeight());
+                break;
 
            case "personalSensitivityToInsulin":
-               TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-               return interface_1.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
 
+
+               physicalActivityLevel = taskPSTI.getPhysicalActivityLevel();
+               intArrayToIntList(taskPSTI.getPhysicalActivitySamples(),actSamples);
+               intArrayToIntList(taskPSTI.getBloodSugarDropSamples(),blSamples);
+               result = interface_.personalSensitivityToInsulin(physicalActivityLevel, actSamples, blSamples);
+               break;
        }
-        return 0;
+        return result;
     }
 
     public String getTask() {
@@ -227,47 +234,56 @@ class TaskURL1 implements Callable<Integer> {
         this.task = task;
     }
 
-    public int getResult() {
-        return result;
+    public void intArrayToIntList(int[] input,List<Integer> output){
+
+        for (int i=0;i< input.length;i++){
+            output.add(input[i]);
+        }
     }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-
 }
 
 class TaskURL2 implements Callable<Integer> {
 
     public String task;
-    private int result;
+    public int result = 0;
+    TaskMealtimeInsulinDose taskMTID;
+    TaskBackgroundInsulinDose taskBID;
+    TaskPersonalSensivityToInsulin taskPSTI;
+    url2.InsulinCalculator_Service service;
+    url2.InsulinCalculator interface_;
 
-    url1.InsulinDoseCalculatorService servico2;
-    url1.InsulinDoseCalculator interface_2;
+    int physicalActivityLevel;
+    List<Integer> actSamples = new ArrayList<>();
+    List<Integer> blSamples = new ArrayList<>();
 
-    public TaskURL2(){
-        servico2 = new url1.InsulinDoseCalculatorService();
-        interface_2 = servico2.getInsulinDoseCalculatorPort();
+    public TaskURL2(String task_,TaskMealtimeInsulinDose taskMTID_,TaskBackgroundInsulinDose taskBID_,TaskPersonalSensivityToInsulin taskPSTI_){
+        taskMTID = taskMTID_;
+        taskBID = taskBID_;
+        taskPSTI = taskPSTI_;
+        setTask(task_);
+        service = new url2.InsulinCalculator_Service();
+        interface_ = service.getInsulinCalculatorPort();
     }
+
     @Override
     public Integer call() throws Exception {
-        switch (task){
+        switch (this.getTask()){
             case "mealtimeInsulinDose":
-                TaskMealtimeInsulinDose taskMealTimeInsulinDose = new TaskMealtimeInsulinDose();
-                return interface_2.mealtimeInsulinDose(taskMealTimeInsulinDose.getTaskCarbohydrateAmount(), taskMealTimeInsulinDose.getTaskCarbohydrateToInsulinRatio(), taskMealTimeInsulinDose.getTaskPreMealBloodSugar(), taskMealTimeInsulinDose.getTaskTargetBloodSugar(), taskMealTimeInsulinDose.getTaskPersonalSensitivity());
-
+                result = interface_.mealtimeInsulinDose(taskMTID.getTaskCarbohydrateAmount(), taskMTID.getTaskCarbohydrateToInsulinRatio(), taskMTID.getTaskPreMealBloodSugar(), taskMTID.getTaskTargetBloodSugar(), taskMTID.getTaskPersonalSensitivity());
+                break;
 
             case "backgroundInsulinDose":
-                TaskBackgroundInsulinDose taskBackgroundInsulinDose = new TaskBackgroundInsulinDose();
-                return interface_2.backgroundInsulinDose(taskBackgroundInsulinDose.getBodyWeight());
-
+                result = interface_.backgroundInsulinDose(taskBID.getBodyWeight());
+                break;
 
             case "personalSensitivityToInsulin":
-                TaskPersonalSensivityToInsulin taskPersonalSensivityToInsulin = new TaskPersonalSensivityToInsulin();
-                return interface_2.personalSensitivityToInsulin(taskPersonalSensivityToInsulin.getPhysicalActivityLevel(),  taskPersonalSensivityToInsulin.getPhysicalActivitySamples(), taskPersonalSensivityToInsulin.getBloodSugarDropSamples());
+                physicalActivityLevel = taskPSTI.getPhysicalActivityLevel();
+                intArrayToIntList(taskPSTI.getPhysicalActivitySamples(),actSamples);
+                intArrayToIntList(taskPSTI.getBloodSugarDropSamples(),blSamples);
+                result = interface_.personalSensitivityToInsulin(physicalActivityLevel, actSamples, blSamples);
+                break;
         }
-        return 0;
+        return result;
     }
 
     public String getTask() {
@@ -278,13 +294,10 @@ class TaskURL2 implements Callable<Integer> {
         this.task = task;
     }
 
-    public int getResult() {
-        return result;
+    public void intArrayToIntList(int[] input,List<Integer> output){
+
+        for (int i=0;i< input.length;i++){
+            output.add(input[i]);
+        }
     }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-
 }

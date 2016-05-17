@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="bodyWeight" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,26 +27,26 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "backgroundInsulinDose", propOrder = {
-    "arg0"
+    "bodyWeight"
 })
 public class BackgroundInsulinDose {
 
-    protected int arg0;
+    protected int bodyWeight;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the bodyWeight property.
      * 
      */
-    public int getArg0() {
-        return arg0;
+    public int getBodyWeight() {
+        return bodyWeight;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the bodyWeight property.
      * 
      */
-    public void setArg0(int value) {
-        this.arg0 = value;
+    public void setBodyWeight(int value) {
+        this.bodyWeight = value;
     }
 
 }
