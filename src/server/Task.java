@@ -215,8 +215,6 @@ class TaskURL1 implements Callable<Integer> {
                 break;
 
            case "personalSensitivityToInsulin":
-
-
                physicalActivityLevel = taskPSTI.getPhysicalActivityLevel();
                intArrayToIntList(taskPSTI.getPhysicalActivitySamples(),actSamples);
                intArrayToIntList(taskPSTI.getBloodSugarDropSamples(),blSamples);
@@ -241,7 +239,6 @@ class TaskURL1 implements Callable<Integer> {
         }
     }
 }
-
 class TaskURL2 implements Callable<Integer> {
 
     public String task;

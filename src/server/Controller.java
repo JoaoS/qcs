@@ -38,9 +38,7 @@ public class Controller {
         List<Integer> activitySamples= new ArrayList<>();
         List<Integer> bloodSamples= new ArrayList<>();
 
-
         switch (getServiceURI()) {
-
             /*Meal Time Insulin Dose*/
             case "mealtimeInsulinDose":
                 TaskMealtimeInsulinDose taskMealtimeInsulinDose = new TaskMealtimeInsulinDose();
@@ -161,15 +159,11 @@ public class Controller {
                 for(int i=0;i<output.size();i++){
                     System.out.println("RESULT "+i+":"+output.get(i));
                 }
-
                 executor.shutdown();
                 break;
         }
 
     }
-
-
-
 
     /**
      *
