@@ -200,22 +200,17 @@ public class Controller {
         Collections.sort(values);
         //correct the -1
         int timeouts=Collections.frequency(values,-1);
-
         if (timeouts<=1){
-
             //voter system
-            int leftDistance=values.get(1)-values.get(0);
+            int leftDistance=values.get(1)-Math.abs(values.get(0));
             int rightDistance=values.get(2)-values.get(1);
 
-            if (leftDistance <= 1 || rightDistance <=1) {
+            if (leftDistance == 1|| leftDistance==0 || rightDistance ==1|| rightDistance==0) {
                 return values.get(1);
             }
-
         }
-
         //else
         return -1;
-
     }
 
 
